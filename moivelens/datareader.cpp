@@ -12,7 +12,7 @@ using namespace std;
 
 void readData(string const &filename, UsersMap &users) {
   ifstream ifs(filename);
-  while (ifs.good()) {
+  while (ifs.good() ) {
     int userId, itermId, rating, timestamp;
     ifs >>  userId >> itermId >> rating >> timestamp;
     Ratings *ratings = &users[userId];

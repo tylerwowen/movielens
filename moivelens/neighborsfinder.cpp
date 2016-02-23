@@ -9,43 +9,44 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-NeighborsLocator::NeighborsLocator(UsersMap *users, Ratings *targetUser, int numOfItems) {
+NeighborsLocator::NeighborsLocator(UsersMap *users, int numOfItems) {
   this->users = users;
-  this->targetUser = targetUser;
+  
   this->numOfItems = numOfItems;
 }
 
-vector<Ratings*> NeighborsLocator::getNeighbors(int k, int method) {
+vector<Ratings*> NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) {
+  this->targetUser = targetUser;
   Distances distances(users->size());
   
   switch (method) {
     case LMax:
       calculateAllDistances(distances, &NeighborsLocator::euclideanDistance);
-      sort_nth_elemet(distances, k, true);
+      sort_nth_elemet(distances, k+1, true);
       break;
     case L1:
       calculateAllDistances(distances, &NeighborsLocator::cityBlockDistance);
-      sort_nth_elemet(distances, k, true);
+      sort_nth_elemet(distances, k+1, true);
       break;
     case L2:
       calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
-      sort_nth_elemet(distances, k, false);
+      sort_nth_elemet(distances, k+1, false);
       break;
     case PCC:
       // TODO: implement PCC
       calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
-      sort_nth_elemet(distances, k, false);
+      sort_nth_elemet(distances, k+1, false);
       break;
     default:
       break;
   }
 
-  vector<Ratings*> neighbors;
+  vector<Ratings*> neighbors(k);
   
-  for (int i = 0; i < k; i++) {
+  for (int i = 1; i <= k; i++) {
     int userId = distances[i].first;
     neighbors.push_back(&((*users)[userId]));
-    cout << "Neighbor" << i << " is " << userId << endl;
+//    cout << "Neighbor" << i << " is " << userId << endl;
     
   }
   return neighbors;
@@ -124,5 +125,5 @@ bool cmp(const Distance &a, const Distance &b) {
 }
 
 bool reverseCmp(const Distance &a, const Distance &b) {
-  return a.second >= b.second;
+  return a.second > b.second;
 }

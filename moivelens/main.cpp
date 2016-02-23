@@ -7,13 +7,28 @@
 //
 
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 #include "common.hpp"
 #include "datareader.hpp"
 #include "neighborsfinder.hpp"
 using namespace std;
+
+double getPredication(vector<Ratings*> neighbors, int itemId) {
+  double validRatings = 0, ratingSum = 0;
+  for (int i = 0; i < neighbors.size(); i++) {
+    Ratings::const_iterator ratingItr = neighbors[i]->find(itemId);
+    if (ratingItr != neighbors[i]->end()) {
+      validRatings++;
+      ratingSum += ratingItr->second;
+    }
+  }
+  if (validRatings == 0) {
+    return 0;
+  }
+  return ratingSum/validRatings;
+}
 
 int main(int argc, const char * argv[]) {
   if (argc < 4) {
@@ -27,10 +42,20 @@ int main(int argc, const char * argv[]) {
   readData(argv[3], testUsers);
   // consider converting map to vector to improve performance after data is read
   
-  NeighborsLocator neighborsLocator(&trainUsers, &trainUsers[10], numOfMovies);
-  neighborsLocator.getNeighbors(5, LMax);
-  neighborsLocator.getNeighbors(5, L1);
-  neighborsLocator.getNeighbors(5, L2);
+  NeighborsLocator locator(&trainUsers, numOfMovies);
+  
+  for (auto& user: testUsers) {
+    vector<Ratings*> neighbors = locator.getNeighbors(&(user.second), 5, L2);
+    cout << "user with id:" << user.first << endl;
+    for (auto&rating: user.second) {
+      int actual = rating.second;
+      double prediction = getPredication(neighbors, rating.first);
+      if (prediction != 0) {
+        cout << "actual:    " << actual << "\npredicted: " << prediction << endl;
+      }
+    }
+  }
+  
   exit(0);
 }
 

@@ -26,8 +26,8 @@ typedef std::vector<Distance> Distances;
 
 class NeighborsLocator {
 public:
-  NeighborsLocator(UsersMap *users, Ratings *targetUser, int numOfItems);
-  std::vector<Ratings*> getNeighbors(int k, int method);
+  NeighborsLocator(UsersMap *users, int numOfItems);
+  std::vector<Ratings*> getNeighbors(Ratings *targetUser, int k, int method);
 
 private:
   UsersMap *users;
