@@ -18,6 +18,7 @@
  *  {userId, distance value}
  */
 typedef std::pair<int, double> Distance;
+
 /**
  *  Vector of distances from one user to others.
  */
@@ -40,6 +41,15 @@ private:
   double cosineSimilarity(Ratings &r1, Ratings &r2);
 };
 
+/**
+ *  Sort `distances`'s leaset(or largest) k elements.
+ *  Time complexity: O(n + k*log(k)). When n >> k, O(n)
+ *
+ *  @param distances Collection to sort
+ *  @param k         number of elements to sort
+ *  @param ascending Sort in ascending order if set to true
+ */
+void sort_nth_elemet(Distances &distances, int k, bool ascending);
 bool cmp(const Distance &a, const Distance &b);
 bool reverseCmp(const Distance &a, const Distance &b);
 

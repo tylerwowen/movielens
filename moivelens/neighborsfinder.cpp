@@ -21,18 +21,20 @@ vector<Ratings*> NeighborsLocator::getNeighbors(int k, int method) {
   switch (method) {
     case LMax:
       calculateAllDistances(distances, &NeighborsLocator::euclideanDistance);
-      nth_element(distances.begin(), distances.begin() + k, distances.end(), cmp);
+      sort_nth_elemet(distances, k, true);
       break;
     case L1:
       calculateAllDistances(distances, &NeighborsLocator::cityBlockDistance);
-      nth_element(distances.begin(), distances.begin() + k, distances.end(), cmp);
+      sort_nth_elemet(distances, k, true);
       break;
     case L2:
       calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
-      nth_element(distances.begin(), distances.begin() + k, distances.end(), reverseCmp);
+      sort_nth_elemet(distances, k, false);
       break;
     case PCC:
+      // TODO: implement PCC
       calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
+      sort_nth_elemet(distances, k, false);
       break;
     default:
       break;
@@ -40,17 +42,7 @@ vector<Ratings*> NeighborsLocator::getNeighbors(int k, int method) {
 
   vector<Ratings*> neighbors;
   
-  
   for (int i = 0; i < k; i++) {
-//    double min = distances[i].second;
-//    int minIndex = i;
-//    for (int j = i; j < users->size(); j++) {
-//      if (distances[j].second < min) {
-//        min = distances[j].second;
-//        minIndex = j;
-//      }
-//    }
-//    swap(distances[i], distances[minIndex]);
     int userId = distances[i].first;
     neighbors.push_back(&((*users)[userId]));
     cout << "Neighbor" << i << " is " << userId << endl;
@@ -114,6 +106,17 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
     norm2SQ += rating2 * rating2;
   }
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
+}
+
+void sort_nth_elemet(Distances &distances, int k, bool ascending) {
+  if (ascending) {
+    nth_element(distances.begin(), distances.begin() + k, distances.end(), cmp);
+    sort(distances.begin(), distances.begin() + k, cmp);
+  }
+  else {
+    nth_element(distances.begin(), distances.begin() + k, distances.end(), reverseCmp);
+    sort(distances.begin(), distances.begin() + k, reverseCmp);
+  }
 }
 
 bool cmp(const Distance &a, const Distance &b) {
