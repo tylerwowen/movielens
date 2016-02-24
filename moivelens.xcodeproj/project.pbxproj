@@ -14,6 +14,8 @@
 		2FDBA6531C7BC0B8002E3B7E /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
 		2FDBA6591C7C0065002E3B7E /* neighborsfinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6571C7C0065002E3B7E /* neighborsfinder.cpp */; };
 		2FDBA65A1C7C08F1002E3B7E /* neighborsfinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6571C7C0065002E3B7E /* neighborsfinder.cpp */; };
+		2FDBA6601C7D8227002E3B7E /* argparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA65E1C7D8227002E3B7E /* argparser.cpp */; };
+		2FDBA6641C7D8567002E3B7E /* libargp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDBA6631C7D8567002E3B7E /* libargp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +50,9 @@
 		2FDBA6511C7BBA15002E3B7E /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = /usr/local/Frameworks/gtest.framework; sourceTree = "<absolute>"; };
 		2FDBA6571C7C0065002E3B7E /* neighborsfinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neighborsfinder.cpp; sourceTree = "<group>"; };
 		2FDBA6581C7C0065002E3B7E /* neighborsfinder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = neighborsfinder.hpp; sourceTree = "<group>"; };
+		2FDBA65E1C7D8227002E3B7E /* argparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = argparser.cpp; sourceTree = "<group>"; };
+		2FDBA65F1C7D8227002E3B7E /* argparser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = argparser.hpp; sourceTree = "<group>"; };
+		2FDBA6631C7D8567002E3B7E /* libargp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libargp.a; path = "../../../../../usr/local/Cellar/argp-standalone/1.3/lib/libargp.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FDBA6641C7D8567002E3B7E /* libargp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +78,7 @@
 		2FDBA62C1C7A8425002E3B7E = {
 			isa = PBXGroup;
 			children = (
+				2FDBA6631C7D8567002E3B7E /* libargp.a */,
 				2FDBA6371C7A8425002E3B7E /* moivelens */,
 				2FDBA64B1C7BB965002E3B7E /* UnitTests */,
 				2FDBA6361C7A8425002E3B7E /* Products */,
@@ -96,6 +103,8 @@
 				2FDBA6581C7C0065002E3B7E /* neighborsfinder.hpp */,
 				2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */,
 				2FDBA6431C7AE3F9002E3B7E /* datareader.hpp */,
+				2FDBA65E1C7D8227002E3B7E /* argparser.cpp */,
+				2FDBA65F1C7D8227002E3B7E /* argparser.hpp */,
 			);
 			path = moivelens;
 			sourceTree = "<group>";
@@ -187,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FDBA6591C7C0065002E3B7E /* neighborsfinder.cpp in Sources */,
+				2FDBA6601C7D8227002E3B7E /* argparser.cpp in Sources */,
 				2FDBA6391C7A8425002E3B7E /* main.cpp in Sources */,
 				2FDBA6441C7AE3F9002E3B7E /* datareader.cpp in Sources */,
 			);
@@ -287,6 +297,11 @@
 		2FDBA63D1C7A8425002E3B7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/Cellar/argp-standalone/1.3/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -294,6 +309,11 @@
 		2FDBA63E1C7A8425002E3B7E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/Cellar/argp-standalone/1.3/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -339,6 +359,7 @@
 				2FDBA63E1C7A8425002E3B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2FDBA64E1C7BB965002E3B7E /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
@@ -347,6 +368,7 @@
 				2FDBA6501C7BB965002E3B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

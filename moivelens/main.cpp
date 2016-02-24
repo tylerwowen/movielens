@@ -6,10 +6,12 @@
 //  Copyright © 2016 Tyler Ouyang. All rights reserved.
 //
 
+#include <argp.h>
 #include <iostream>
 #include <map>
 #include <vector>
 
+#include "argparser.hpp"
 #include "common.hpp"
 #include "datareader.hpp"
 #include "neighborsfinder.hpp"
@@ -30,19 +32,18 @@ double getPredication(vector<Ratings*> neighbors, int itemId) {
   return ratingSum/validRatings;
 }
 
-int main(int argc, const char * argv[]) {
-  if (argc < 4) {
-    cout << "Please give me a set of files.\n";
-    exit(1);
-  }
+int main(int argc, char ** argv) {
+  struct arguments args;
+  args.isInt = false;
   
-  int numOfMovies = atoi(argv[1]);
+  argp_parse (&argp, argc, argv, 0, 0, &args);
+  
   UsersMap trainUsers, testUsers;
-  readData(argv[2], trainUsers);
-  readData(argv[3], testUsers);
+  readData(args.trainFile, trainUsers);
+  readData(args.testFile, testUsers);
   // consider converting map to vector to improve performance after data is read
-  
-  NeighborsLocator locator(&trainUsers, numOfMovies);
+  cout << trainUsers.size();
+  NeighborsLocator locator(&trainUsers, args.moiveNum);
   
   for (auto& user: testUsers) {
     vector<Ratings*> neighbors = locator.getNeighbors(&(user.second), 5, PCC);

@@ -16,6 +16,16 @@
 
 #include "common.hpp"
 
+class my_ctype : public std::ctype<char> {
+  mask my_table[table_size];
+public:
+  my_ctype(size_t refs = 0) : std::ctype<char>(&my_table[0], false, refs) {
+    std::copy_n(classic_table(), table_size, my_table);
+    my_table[':'] = (mask)space;
+    my_table[' '] = (mask)space;
+  }
+};
+
 void readData(std::string const &filename, UsersMap &users);
 
 #endif /* datareader_hpp */

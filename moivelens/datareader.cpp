@@ -12,10 +12,14 @@ using namespace std;
 
 void readData(string const &filename, UsersMap &users) {
   ifstream ifs(filename);
+  locale colon(std::locale::classic(), new my_ctype);
+  ifs.imbue(colon);
+  
   while (ifs.good()) {
-    int userId, itermId, rating, timestamp;
+    int userId, itermId, timestamp;
+    float rating;
     ifs >>  userId >> itermId >> rating >> timestamp;
     Ratings *ratings = &users[userId];
-    ratings->insert(pair<int, int>(itermId, rating));
+    ratings->insert(pair<int, float>(itermId, rating));
   }
 }

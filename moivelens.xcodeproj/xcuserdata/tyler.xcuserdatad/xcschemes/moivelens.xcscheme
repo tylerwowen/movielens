@@ -64,23 +64,43 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "1682"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "./data/u.data"
+            argument = "-m 10681"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "./data/u1.base"
+            argument = "-u 71567"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r ./data10M/r1.train"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-t ./data10M/r1.test"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-m 1682"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "./data/u1.test"
+            argument = "-u 1000"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "testdata"
+            argument = "-r ./data/u1.base -i"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-t ./data/u1.test"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r ./data10M/ratings.dat"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r ./data/u.data"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
