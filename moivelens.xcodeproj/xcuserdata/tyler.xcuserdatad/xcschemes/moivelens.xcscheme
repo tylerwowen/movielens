@@ -64,6 +64,10 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
+            argument = "-d 3"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-m 10681"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -88,7 +92,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-r ./data/u1.base -i"
+            argument = "-r ./data/u1.base"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

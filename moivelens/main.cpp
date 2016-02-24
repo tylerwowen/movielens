@@ -17,7 +17,7 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-double getPredication(vector<Ratings*> neighbors, int itemId) {
+double getPredication(UsersPtr neighbors, int itemId) {
   double validRatings = 0, ratingSum = 0;
   for (int i = 0; i < neighbors.size(); i++) {
     Ratings::const_iterator ratingItr = neighbors[i]->find(itemId);
@@ -34,21 +34,20 @@ double getPredication(vector<Ratings*> neighbors, int itemId) {
 
 int main(int argc, char ** argv) {
   struct arguments args;
-  args.isInt = false;
+  args.method = 0;
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
-  UsersMap trainUsers, testUsers;
+  Users trainUsers(args.userNum), testUsers(args.userNum);
   readData(args.trainFile, trainUsers);
   readData(args.testFile, testUsers);
-  // consider converting map to vector to improve performance after data is read
-  cout << trainUsers.size();
+
   NeighborsLocator locator(&trainUsers, args.moiveNum);
   
-  for (auto& user: testUsers) {
-    vector<Ratings*> neighbors = locator.getNeighbors(&(user.second), 5, PCC);
-    cout << "user with id:" << user.first << endl;
-    for (auto&rating: user.second) {
+  for (Users::iterator user = trainUsers.begin(); user < trainUsers.end(); user++) {
+    UsersPtr neighbors = locator.getNeighbors(&(*user), 5, args.method);
+    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
+    for (auto&rating: *user) {
       int actual = rating.second;
       double prediction = getPredication(neighbors, rating.first);
       if (prediction != 0) {

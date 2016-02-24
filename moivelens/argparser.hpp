@@ -23,6 +23,7 @@ static struct argp_option options[] = {
   {"method",     'd', "method",   0, "Method used for similarity measure.\n0: LMax, 1: L1, 2: L2, 3: PCC" },
   {"movie-num",  'm', "number",   0, "Max number of movies"},
   {"user-num",   'u', "number",   0, "Max number of users"},
+  {"neighbor-num",'k', "number",  0, "Number of neighbora."},
   { 0 }
 };
 
@@ -32,7 +33,6 @@ struct arguments {
   int userNum;
   int moiveNum;
   int method;
-  bool isInt;
 };
 
 error_t parse_opt (int key, char *arg, struct argp_state *state);

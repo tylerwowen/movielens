@@ -9,14 +9,14 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-NeighborsLocator::NeighborsLocator(UsersMap *users, int numOfItems) {
-  this->users = users;
+NeighborsLocator::NeighborsLocator(Users *trainUsers, int numOfItems) {
+  this->trainUsers = trainUsers;
   this->numOfItems = numOfItems;
 }
 
-vector<Ratings*> NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) {
+UsersPtr NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) {
   this->targetUser = targetUser;
-  Distances distances(users->size());
+  Distances distances(trainUsers->size());
   
   switch (method) {
     case LMax:
@@ -39,21 +39,19 @@ vector<Ratings*> NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int 
       break;
   }
   
-  vector<Ratings*> neighbors(k);
+  UsersPtr neighbors(k);
   
   for (int i = 1; i <= k; i++) {
     int userId = distances[i].first;
-    neighbors[i-1] = &((*users)[userId]);    
+    neighbors[i-1] = &((*trainUsers)[userId]);
   }
   return neighbors;
 }
 
 void NeighborsLocator::calculateAllDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&)) {
-  int i = 0;
-  for (auto& otherUser: *users) {
-    distances[i].first = otherUser.first;
-    distances[i].second = (this->*distanceFunc)(otherUser.second, *targetUser);
-    i++;
+  for (int i = 0; i < trainUsers->size(); i++) {
+    distances[i].first = i;
+    distances[i].second = (this->*distanceFunc)((*trainUsers)[i], *targetUser);
   }
 }
 
