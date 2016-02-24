@@ -30,6 +30,9 @@ error_t parse_opt (int key, char *arg, struct argp_state *state) {
     case 'u':
       arguments->userNum = atoi(arg);
       break;
+    case 'k':
+      arguments->k = atoi(arg);
+      break;
     case ARGP_KEY_END:
       if (state->argc < 2) {
         /* No inputs. */

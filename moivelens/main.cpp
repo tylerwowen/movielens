@@ -43,19 +43,20 @@ int main(int argc, char ** argv) {
   readData(args.testFile, testUsers);
 
   NeighborsLocator locator(&trainUsers, args.moiveNum);
-  
-  for (Users::iterator user = trainUsers.begin(); user < trainUsers.end(); user++) {
-    UsersPtr neighbors = locator.getNeighbors(&(*user), 5, args.method);
-    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
+  int count = 0;
+  for (Users::iterator user = testUsers.begin(); user < testUsers.end(); user++) {
+    UsersPtr neighbors = locator.getNeighbors(&(*user), args.k, args.method);
+//    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
     for (auto&rating: *user) {
       int actual = rating.second;
       double prediction = getPredication(neighbors, rating.first);
       if (prediction != 0) {
-        cout << "actual:    " << actual << "\npredicted: " << prediction << endl;
+        //cout << "actual:    " << actual << "\npredicted: " << prediction << endl;
+        count++;
       }
     }
   }
-  
+  cout << "processed: " << count << endl;
   exit(0);
 }
 

@@ -17,13 +17,13 @@ void readData(string const &filename, Users &users) {
   
   while (ifs.good()) {
     int userId, itermId, timestamp;
-    float rating;
+    double rating;
     ifs >>  userId >> itermId >> rating >> timestamp;
 //    if (users[userId]) {
 //      <#statements#>
 //    }
     
     Ratings *ratings = &users[userId];
-    ratings->insert(pair<int, float>(itermId, rating));
+    ratings->insert(pair<int, double>(itermId, rating));
   }
 }

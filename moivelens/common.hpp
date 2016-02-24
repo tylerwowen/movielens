@@ -20,7 +20,7 @@
 /**
  *  {itemId, rating}
  */
-typedef std::unordered_map<int, float> Ratings;
+typedef std::unordered_map<int, double> Ratings;
 
 /**
  *  <Ratings>

@@ -58,56 +58,84 @@ void NeighborsLocator::calculateAllDistances(Distances &distances, double (Neigh
 double NeighborsLocator::euclideanDistance(Ratings &r1, Ratings &r2) {
   double distance = 0;
   // assume that the moive ids are from 1 to numOfItems
-  for (int itemId = 1; itemId <= numOfItems; itemId++) {
-    int rating1, rating2;
-    Ratings::const_iterator r1itr = r1.find(itemId);
-    rating1 = r1itr == r1.end() ? 0 : r1itr->second;
-    
+  for (auto& r: r1) {
+    int itemId = r.first;
+    double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
     
     distance += pow(rating1 - rating2, 2);
   }
+  for (auto& r: r2) {
+    int itemId = r.first;
+    double rating2 = r.second;
+    Ratings::const_iterator r1itr = r1.find(itemId);
+    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    
+    distance += pow(rating1 - rating2, 2);
+  }
+  
   return sqrt(distance);
 }
 
 double NeighborsLocator::cityBlockDistance(Ratings &r1, Ratings &r2) {
   double distance = 0;
-  for (int itemId = 1; itemId <= numOfItems; itemId++) {
-    int rating1, rating2;
-    Ratings::const_iterator r1itr = r1.find(itemId);
-    rating1 = r1itr == r1.end() ? 0 : r1itr->second;
-    
+  
+  for (auto& r: r1) {
+    int itemId = r.first;
+    double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
     
     distance += fabs(rating1 - rating2);
   }
+  
+  for (auto& r: r2) {
+    int itemId = r.first;
+    double rating2 = r.second;
+    Ratings::const_iterator r1itr = r1.find(itemId);
+    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    
+    distance += fabs(rating1 - rating2);
+  }
+  
   return distance;
 }
 
 double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
   double dotProduct = 0, norm1SQ = 0, norm2SQ = 0;
-  for (int itemId = 1; itemId <= numOfItems; itemId++) {
-    int rating1, rating2;
-    Ratings::const_iterator r1itr = r1.find(itemId);
-    rating1 = r1itr == r1.end() ? 0 : r1itr->second;
-    
+  
+  for (auto& r: r1) {
+    int itemId = r.first;
+    double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
     
     dotProduct += rating1 * rating2;
     norm1SQ += rating1 * rating1;
     norm2SQ += rating2 * rating2;
   }
+  
+  for (auto& r: r2) {
+    int itemId = r.first;
+    double rating2 = r.second;
+    Ratings::const_iterator r1itr = r1.find(itemId);
+    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+
+    dotProduct += rating1 * rating2;
+    norm1SQ += rating1 * rating1;
+    norm2SQ += rating2 * rating2;
+  }
+
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
 }
 
 double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
   double sum1 = 0, sum1SQ = 0,
   sum2 = 0, sum2SQ, sum12 = 0;
+  
   for (int itemId = 1; itemId <= numOfItems; itemId++) {
-    int rating1, rating2;
+    double rating1, rating2;
     Ratings::const_iterator r1itr = r1.find(itemId);
     rating1 = r1itr == r1.end() ? 0 : r1itr->second;
     

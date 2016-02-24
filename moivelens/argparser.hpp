@@ -33,6 +33,7 @@ struct arguments {
   int userNum;
   int moiveNum;
   int method;
+  int k;
 };
 
 error_t parse_opt (int key, char *arg, struct argp_state *state);
