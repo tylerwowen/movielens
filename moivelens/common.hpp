@@ -28,7 +28,7 @@ typedef std::unordered_map<int, double> Ratings;
 typedef std::unordered_map<int, Ratings> UsersMap;
 
 /**
- *  <Ratings*>
+ *  {Ratings*}
  */
 typedef std::vector<Ratings*> UsersPtr;
 

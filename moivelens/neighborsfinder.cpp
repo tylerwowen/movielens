@@ -68,11 +68,15 @@ double NeighborsLocator::euclideanDistance(Ratings &r1, Ratings &r2) {
     
     distance += pow(rating1 - rating2, 2);
   }
+  
   for (auto& r: r2) {
     int itemId = r.first;
     double rating2 = r.second;
     Ratings::const_iterator r1itr = r1.find(itemId);
-    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    if (r1itr != r1.end()) {
+      continue;
+    }
+    double rating1 = 0;
     
     distance += pow(rating1 - rating2, 2);
   }
@@ -96,7 +100,10 @@ double NeighborsLocator::cityBlockDistance(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating2 = r.second;
     Ratings::const_iterator r1itr = r1.find(itemId);
-    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    if (r1itr != r1.end()) {
+      continue;
+    }
+    double rating1 = 0;
     
     distance += fabs(rating1 - rating2);
   }
@@ -122,7 +129,10 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating2 = r.second;
     Ratings::const_iterator r1itr = r1.find(itemId);
-    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    if (r1itr != r1.end()) {
+      continue;
+    }
+    double rating1 = 0;
 
     dotProduct += rating1 * rating2;
     norm1SQ += rating1 * rating1;
@@ -136,7 +146,6 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
   double sum1 = 0, sum1SQ = 0,
   sum2 = 0, sum2SQ, sum12 = 0;
   
-  
   for (auto& r: r1) {
     int itemId = r.first;
     double rating1 = r.second;
@@ -149,11 +158,15 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
     sum2 += rating2;
     sum2SQ += rating2 * rating2;
   }
+  
   for (auto& r: r2) {
     int itemId = r.first;
     double rating2 = r.second;
     Ratings::const_iterator r1itr = r1.find(itemId);
-    double rating1 = r1itr == r1.end() ?  0 : r1itr->second;
+    if (r1itr != r1.end()) {
+      continue;
+    }
+    double rating1 = 0;
     
     sum12 += rating1 * rating2;
     sum1 += rating1;

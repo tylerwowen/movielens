@@ -40,23 +40,26 @@ int main(int argc, char ** argv) {
   
   UsersMap trainUsers(args.userNum), testUsers;
   readData(args.trainFile, trainUsers);
-  readData(args.testFile, testUsers);
+  int testSize = readData(args.testFile, testUsers);
 
   NeighborsLocator locator(&trainUsers, args.moiveNum);
-  int count = 0;
+  double sum = 0, sumSQ = 0;
   for (auto& user: testUsers) {
     UsersPtr neighbors = locator.getNeighbors(&(user.second), args.k, args.method);
 //    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
     for (auto&rating: user.second) {
-      int actual = rating.second;
+      double actual = rating.second;
       double prediction = getPredication(neighbors, rating.first);
-      if (prediction != 0) {
-        //cout << "actual:    " << actual << "\npredicted: " << prediction << endl;
-        count++;
-      }
+      sum += fabs(actual - prediction);
+      sumSQ += pow(actual - prediction, 2);
+//      if (prediction != 0) {
+//        cout << "actual:    " << actual << "\npredicted: " << prediction << endl;
+//        count++;
+//      }
     }
   }
-  cout << "processed: " << count << endl;
+  cout << "MAE = " << sum / testSize << endl;
+  cout << "RMSE = " << sqrt(sumSQ / testSize) << endl;
   exit(0);
 }
 

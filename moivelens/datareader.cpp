@@ -10,10 +10,11 @@
 
 using namespace std;
 
-void readData(string const &filename, UsersMap &users) {
+int readData(string const &filename, UsersMap &users) {
   ifstream ifs(filename);
   locale colon(std::locale::classic(), new my_ctype);
   ifs.imbue(colon);
+  int ratingCount = 0;
   
   while (ifs.good()) {
     int userId, itermId, timestamp;
@@ -22,5 +23,7 @@ void readData(string const &filename, UsersMap &users) {
     
     Ratings *ratings = &users[userId];
     ratings->insert(pair<int, double>(itermId, rating));
+    ratingCount++;
   }
+  return ratingCount;
 }
