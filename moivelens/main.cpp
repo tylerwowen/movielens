@@ -38,16 +38,16 @@ int main(int argc, char ** argv) {
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
-  Users trainUsers(args.userNum), testUsers(args.userNum);
+  UsersMap trainUsers(args.userNum), testUsers;
   readData(args.trainFile, trainUsers);
   readData(args.testFile, testUsers);
 
   NeighborsLocator locator(&trainUsers, args.moiveNum);
   int count = 0;
-  for (Users::iterator user = testUsers.begin(); user < testUsers.end(); user++) {
-    UsersPtr neighbors = locator.getNeighbors(&(*user), args.k, args.method);
+  for (auto& user: testUsers) {
+    UsersPtr neighbors = locator.getNeighbors(&(user.second), args.k, args.method);
 //    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
-    for (auto&rating: *user) {
+    for (auto&rating: user.second) {
       int actual = rating.second;
       double prediction = getPredication(neighbors, rating.first);
       if (prediction != 0) {
