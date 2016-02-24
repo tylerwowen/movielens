@@ -26,4 +26,5 @@ typedef std::unordered_map<int, int> Ratings;
  */
 typedef std::unordered_map<int, Ratings> UsersMap;
 
+
 #endif /* common_hpp */

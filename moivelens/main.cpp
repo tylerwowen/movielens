@@ -45,7 +45,7 @@ int main(int argc, const char * argv[]) {
   NeighborsLocator locator(&trainUsers, numOfMovies);
   
   for (auto& user: testUsers) {
-    vector<Ratings*> neighbors = locator.getNeighbors(&(user.second), 5, L2);
+    vector<Ratings*> neighbors = locator.getNeighbors(&(user.second), 5, PCC);
     cout << "user with id:" << user.first << endl;
     for (auto&rating: user.second) {
       int actual = rating.second;

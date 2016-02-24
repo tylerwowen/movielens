@@ -11,7 +11,6 @@ using namespace std;
 
 NeighborsLocator::NeighborsLocator(UsersMap *users, int numOfItems) {
   this->users = users;
-  
   this->numOfItems = numOfItems;
 }
 
@@ -33,21 +32,18 @@ vector<Ratings*> NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int 
       sort_nth_elemet(distances, k+1, false);
       break;
     case PCC:
-      // TODO: implement PCC
-      calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
+      calculateAllDistances(distances, &NeighborsLocator::pcc);
       sort_nth_elemet(distances, k+1, false);
       break;
     default:
       break;
   }
-
+  
   vector<Ratings*> neighbors(k);
   
   for (int i = 1; i <= k; i++) {
     int userId = distances[i].first;
-    neighbors.push_back(&((*users)[userId]));
-//    cout << "Neighbor" << i << " is " << userId << endl;
-    
+    neighbors[i-1] = &((*users)[userId]);    
   }
   return neighbors;
 }
@@ -107,6 +103,32 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
     norm2SQ += rating2 * rating2;
   }
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
+}
+
+double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
+  double sum1 = 0, sum1SQ = 0,
+  sum2 = 0, sum2SQ, sum12 = 0;
+  for (int itemId = 1; itemId <= numOfItems; itemId++) {
+    int rating1, rating2;
+    Ratings::const_iterator r1itr = r1.find(itemId);
+    rating1 = r1itr == r1.end() ? 0 : r1itr->second;
+    
+    Ratings::const_iterator r2itr = r2.find(itemId);
+    rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    
+    sum12 += rating1 * rating2;
+    sum1 += rating1;
+    sum1SQ += rating1 * rating1;
+    sum2 += rating2;
+    sum2SQ += rating2 * rating2;
+  }
+  double covariance = (sum12 - sum1 * sum2 / numOfItems) / numOfItems;
+  double mean1 = sum1 / numOfItems;
+  double mean2 = sum2 / numOfItems;
+  double variance1 = sum1SQ / numOfItems - mean1 * mean1;
+  double variance2 = sum2SQ / numOfItems - mean2 * mean2;
+  
+  return covariance / (sqrt(variance1) * sqrt(variance2));
 }
 
 void sort_nth_elemet(Distances &distances, int k, bool ascending) {

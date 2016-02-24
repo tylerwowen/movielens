@@ -39,6 +39,7 @@ private:
   double euclideanDistance(Ratings &r1, Ratings &r2);
   double cityBlockDistance(Ratings &r1, Ratings &r2);
   double cosineSimilarity(Ratings &r1, Ratings &r2);
+  double pcc(Ratings &r1, Ratings &r2);
 };
 
 /**
