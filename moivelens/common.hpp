@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <vector>
 
-#define LMax 0
+#define COS 0
 #define L1 1
 #define L2 2
 #define PCC 3

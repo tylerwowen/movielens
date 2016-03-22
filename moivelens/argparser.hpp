@@ -20,7 +20,7 @@ static char doc[] = "Movie lens data analyzer";
 static struct argp_option options[] = {
   {"train-data", 'r', "file",     0, "Path to training data"},
   {"test-data",  't', "file",     0, "Path to test data" },
-  {"method",     'd', "method",   0, "Method used for similarity measure.\n0: LMax, 1: L1, 2: L2, 3: PCC" },
+  {"method",     'd', "method",   0, "Method used for similarity measure.\n0: COS, 1: L1, 2: L2, 3: PCC" },
   {"movie-num",  'm', "number",   0, "Max number of movies"},
   {"user-num",   'u', "number",   0, "Max number of users"},
   {"neighbor-num",'k', "number",  0, "Number of neighbora."},

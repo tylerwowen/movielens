@@ -34,6 +34,12 @@ private:
   Ratings *targetUser;
   int numOfItems;
   
+  /**
+   *  <#Description#>
+   *
+   *  @param distances    <#distances description#>
+   *  @param distanceFunc <#distanceFunc description#>
+   */
   void calculateAllDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
   
   double euclideanDistance(Ratings &r1, Ratings &r2);
@@ -43,7 +49,7 @@ private:
 };
 
 /**
- *  Sort `distances`'s leaset(or largest) k elements.
+ *  Sort `distances`'s least(or largest) k elements.
  *  Time complexity: O(n + k*log(k)). When n >> k, O(n)
  *
  *  @param distances Collection to sort
@@ -54,4 +60,5 @@ void sort_nth_elemet(Distances &distances, int k, bool ascending);
 bool cmp(const Distance &a, const Distance &b);
 bool reverseCmp(const Distance &a, const Distance &b);
 
+int defaultRatingForItem(int id);
 #endif /* neighborsfinder_hpp */

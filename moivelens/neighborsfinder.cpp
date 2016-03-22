@@ -19,17 +19,17 @@ UsersPtr NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) 
   Distances distances(trainUsers->size());
   
   switch (method) {
-    case LMax:
-      calculateAllDistances(distances, &NeighborsLocator::euclideanDistance);
-      sort_nth_elemet(distances, k+1, true);
+    case COS:
+      calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
+      sort_nth_elemet(distances, k+1, false);
       break;
     case L1:
       calculateAllDistances(distances, &NeighborsLocator::cityBlockDistance);
       sort_nth_elemet(distances, k+1, true);
       break;
     case L2:
-      calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
-      sort_nth_elemet(distances, k+1, false);
+      calculateAllDistances(distances, &NeighborsLocator::euclideanDistance);
+      sort_nth_elemet(distances, k+1, true);
       break;
     case PCC:
       calculateAllDistances(distances, &NeighborsLocator::pcc);
@@ -64,7 +64,7 @@ double NeighborsLocator::euclideanDistance(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ? defaultRatingForItem(itemId) : r2itr->second;
     
     distance += pow(rating1 - rating2, 2);
   }
@@ -76,7 +76,7 @@ double NeighborsLocator::euclideanDistance(Ratings &r1, Ratings &r2) {
     if (r1itr != r1.end()) {
       continue;
     }
-    double rating1 = 0;
+    double rating1 = defaultRatingForItem(itemId);
     
     distance += pow(rating1 - rating2, 2);
   }
@@ -91,7 +91,7 @@ double NeighborsLocator::cityBlockDistance(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  defaultRatingForItem(itemId) : r2itr->second;
     
     distance += fabs(rating1 - rating2);
   }
@@ -103,7 +103,7 @@ double NeighborsLocator::cityBlockDistance(Ratings &r1, Ratings &r2) {
     if (r1itr != r1.end()) {
       continue;
     }
-    double rating1 = 0;
+    double rating1 = defaultRatingForItem(itemId);
     
     distance += fabs(rating1 - rating2);
   }
@@ -118,7 +118,7 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  defaultRatingForItem(itemId) : r2itr->second;
     
     dotProduct += rating1 * rating2;
     norm1SQ += rating1 * rating1;
@@ -132,13 +132,13 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
     if (r1itr != r1.end()) {
       continue;
     }
-    double rating1 = 0;
+    double rating1 = defaultRatingForItem(itemId);
 
     dotProduct += rating1 * rating2;
     norm1SQ += rating1 * rating1;
     norm2SQ += rating2 * rating2;
   }
-
+  // TODO: handle non-0 situations
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
 }
 
@@ -150,7 +150,7 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
     int itemId = r.first;
     double rating1 = r.second;
     Ratings::const_iterator r2itr = r2.find(itemId);
-    double rating2 = r2itr == r2.end() ?  0 : r2itr->second;
+    double rating2 = r2itr == r2.end() ?  defaultRatingForItem(itemId) : r2itr->second;
     
     sum12 += rating1 * rating2;
     sum1 += rating1;
@@ -166,7 +166,7 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
     if (r1itr != r1.end()) {
       continue;
     }
-    double rating1 = 0;
+    double rating1 = defaultRatingForItem(itemId);
     
     sum12 += rating1 * rating2;
     sum1 += rating1;
@@ -201,4 +201,8 @@ bool cmp(const Distance &a, const Distance &b) {
 
 bool reverseCmp(const Distance &a, const Distance &b) {
   return a.second > b.second;
+}
+
+int defaultRatingForItem(int id) {
+  return 0;
 }
