@@ -9,6 +9,7 @@
 #ifndef common_hpp
 #define common_hpp
 
+#include <list>
 #include <unordered_map>
 #include <vector>
 
@@ -20,7 +21,12 @@
 /**
  *  {itemId, rating}
  */
-typedef std::unordered_map<int, double> Ratings;
+typedef std::pair<int, double> Rating;
+
+/**
+ *  {Rating}
+ */
+typedef std::list<Rating> Ratings;
 
 /**
  *  {userId, Ratings}

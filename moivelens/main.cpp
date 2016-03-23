@@ -20,10 +20,13 @@ using namespace std;
 double getPredication(UsersPtr neighbors, int itemId) {
   double validRatings = 0, ratingSum = 0;
   for (int i = 0; i < neighbors.size(); i++) {
-    Ratings::const_iterator ratingItr = neighbors[i]->find(itemId);
-    if (ratingItr != neighbors[i]->end()) {
-      validRatings++;
-      ratingSum += ratingItr->second;
+    Ratings::const_iterator ratingItr = neighbors[i]->cbegin();
+    for (; ratingItr != neighbors[i]->cend(); ratingItr++) {
+      if (ratingItr->first == itemId) {
+        validRatings++;
+        ratingSum += ratingItr->second;
+        break;
+      }
     }
   }
   if (validRatings == 0) {
@@ -47,7 +50,7 @@ int main(int argc, char ** argv) {
   for (auto& user: testUsers) {
     UsersPtr neighbors = locator.getNeighbors(&(user.second), args.k, args.method);
 //    cout << "user with id:" << distance(trainUsers.begin(), user) << endl;
-    for (auto&rating: user.second) {
+    for (auto& rating: user.second) {
       double actual = rating.second;
       double prediction = getPredication(neighbors, rating.first);
       sum += fabs(actual - prediction);

@@ -35,12 +35,12 @@ private:
   int numOfItems;
   
   /**
-   *  <#Description#>
+   *  Calculates all the distances from `this->targetUser` to all other users
    *
-   *  @param distances    <#distances description#>
-   *  @param distanceFunc <#distanceFunc description#>
+   *  @param distances    Calculated results
+   *  @param distanceFunc The function used to calculate distances
    */
-  void calculateAllDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
+  void calculateAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
   
   double euclideanDistance(Ratings &r1, Ratings &r2);
   double cityBlockDistance(Ratings &r1, Ratings &r2);

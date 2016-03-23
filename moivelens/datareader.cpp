@@ -10,20 +10,31 @@
 
 using namespace std;
 
+bool compare(const Rating &a, const Rating &b) {
+  return a.first < b.first;
+}
+
 int readData(string const &filename, UsersMap &users) {
   ifstream ifs(filename);
   locale colon(std::locale::classic(), new my_ctype);
   ifs.imbue(colon);
   int ratingCount = 0;
   
-  while (ifs.good()) {
+  while (true) {
     int userId, itermId, timestamp;
     double rating;
     ifs >>  userId >> itermId >> rating >> timestamp;
-    
+    if (ifs.fail()) {
+      break;
+    }
     Ratings *ratings = &users[userId];
-    ratings->insert(pair<int, double>(itermId, rating));
+    ratings->emplace_back(itermId, rating);
     ratingCount++;
   }
+  for (auto& user: users) {
+    user.second.sort(compare);
+  }
+  
   return ratingCount;
 }
+
