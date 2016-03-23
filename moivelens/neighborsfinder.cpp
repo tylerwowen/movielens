@@ -148,31 +148,63 @@ double NeighborsLocator::cityBlockDistance(Ratings &r1, Ratings &r2) {
 
 double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
   double dotProduct = 0, norm1SQ = 0, norm2SQ = 0;
-//  
-//  for (auto& r: r1) {
-//    int itemId = r.first;
-//    double rating1 = r.second;
-//    Ratings::const_iterator r2itr = r2.find(itemId);
-//    double rating2 = r2itr == r2.end() ?  defaultRatingForItem(itemId) : r2itr->second;
-//    
-//    dotProduct += rating1 * rating2;
-//    norm1SQ += rating1 * rating1;
-//    norm2SQ += rating2 * rating2;
-//  }
-//  
-//  for (auto& r: r2) {
-//    int itemId = r.first;
-//    double rating2 = r.second;
-//    Ratings::const_iterator r1itr = r1.find(itemId);
-//    if (r1itr != r1.end()) {
-//      continue;
-//    }
-//    double rating1 = defaultRatingForItem(itemId);
-//
-//    dotProduct += rating1 * rating2;
-//    norm1SQ += rating1 * rating1;
-//    norm2SQ += rating2 * rating2;
-//  }
+  
+  Ratings::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
+  while (iter1 != r1.cend() && iter2 != r2.cend()) {
+    double rating1 = 0, rating2 = 0;
+    
+    if (iter1->first < iter2->first) {
+      rating1 = iter1->second;
+      rating2 = defaultRatingForItem(iter1->first);
+      iter1++;
+    }
+    else if (iter1->first == iter2->first) {
+      rating1 = iter1->second;
+      rating2 = iter2->second;
+      iter1++;
+      iter2++;
+    }
+    else {
+      rating1 = defaultRatingForItem(iter2->first);
+      rating2 = iter2->second;
+      iter2++;
+    }
+    dotProduct += rating1 * rating2;
+    norm1SQ += rating1 * rating1;
+    norm2SQ += rating2 * rating2;
+  }
+  
+  Rating r1Last = r1.back();
+  while (iter2 != r2.cend()) {
+    double rating1 = 0, rating2 = iter2->second;
+    if (iter2->first != r1Last.first) {
+      rating1 = defaultRatingForItem(iter2->first);
+    }
+    else {
+      rating1 = r1Last.second;
+    }
+    iter2++;
+    
+    dotProduct += rating1 * rating2;
+    norm1SQ += rating1 * rating1;
+    norm2SQ += rating2 * rating2;
+  }
+  Rating r2Last = r2.back();
+  while (iter1 != r1.cend()) {
+    double rating1 = iter1->second, rating2 = 0;
+    if (iter2->first != r1Last.first) {
+      rating2 = defaultRatingForItem(iter2->first);
+    }
+    else {
+      rating2 = r1Last.second;
+    }
+    iter1++;
+    
+    dotProduct += rating1 * rating2;
+    norm1SQ += rating1 * rating1;
+    norm2SQ += rating2 * rating2;
+  }
+
   // TODO: handle non-0 situations
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
 }
@@ -181,34 +213,67 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
   double sum1 = 0, sum1SQ = 0,
   sum2 = 0, sum2SQ = 0, sum12 = 0;
   
-//  for (auto& r: r1) {
-//    int itemId = r.first;
-//    double rating1 = r.second;
-//    Ratings::const_iterator r2itr = r2.find(itemId);
-//    double rating2 = r2itr == r2.end() ?  defaultRatingForItem(itemId) : r2itr->second;
-//    
-//    sum12 += rating1 * rating2;
-//    sum1 += rating1;
-//    sum1SQ += rating1 * rating1;
-//    sum2 += rating2;
-//    sum2SQ += rating2 * rating2;
-//  }
-//  
-//  for (auto& r: r2) {
-//    int itemId = r.first;
-//    double rating2 = r.second;
-//    Ratings::const_iterator r1itr = r1.find(itemId);
-//    if (r1itr != r1.end()) {
-//      continue;
-//    }
-//    double rating1 = defaultRatingForItem(itemId);
-//    
-//    sum12 += rating1 * rating2;
-//    sum1 += rating1;
-//    sum1SQ += rating1 * rating1;
-//    sum2 += rating2;
-//    sum2SQ += rating2 * rating2;
-//  }
+  Ratings::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
+  while (iter1 != r1.cend() && iter2 != r2.cend()) {
+    double rating1 = 0, rating2 = 0;
+    
+    if (iter1->first < iter2->first) {
+      rating1 = iter1->second;
+      rating2 = defaultRatingForItem(iter1->first);
+      iter1++;
+    }
+    else if (iter1->first == iter2->first) {
+      rating1 = iter1->second;
+      rating2 = iter2->second;
+      iter1++;
+      iter2++;
+    }
+    else {
+      rating1 = defaultRatingForItem(iter2->first);
+      rating2 = iter2->second;
+      iter2++;
+    }
+    sum12 += rating1 * rating2;
+    sum1 += rating1;
+    sum1SQ += rating1 * rating1;
+    sum2 += rating2;
+    sum2SQ += rating2 * rating2;
+  }
+  
+  Rating r1Last = r1.back();
+  while (iter2 != r2.cend()) {
+    double rating1 = 0, rating2 = iter2->second;
+    if (iter2->first != r1Last.first) {
+      rating1 = defaultRatingForItem(iter2->first);
+    }
+    else {
+      rating1 = r1Last.second;
+    }
+    iter2++;
+    
+    sum12 += rating1 * rating2;
+    sum1 += rating1;
+    sum1SQ += rating1 * rating1;
+    sum2 += rating2;
+    sum2SQ += rating2 * rating2;
+  }
+  Rating r2Last = r2.back();
+  while (iter1 != r1.cend()) {
+    double rating1 = iter1->second, rating2 = 0;
+    if (iter2->first != r1Last.first) {
+      rating2 = defaultRatingForItem(iter2->first);
+    }
+    else {
+      rating2 = r1Last.second;
+    }
+    iter1++;
+    
+    sum12 += rating1 * rating2;
+    sum1 += rating1;
+    sum1SQ += rating1 * rating1;
+    sum2 += rating2;
+    sum2SQ += rating2 * rating2;
+  }
 
   double covariance = (sum12 - sum1 * sum2 / numOfItems) / numOfItems;
   double mean1 = sum1 / numOfItems;

@@ -18,10 +18,12 @@
 using namespace std;
 
 double getPredication(UsersPtr neighbors, int itemId) {
-  double validRatings = 0, ratingSum = 0;
+  int validRatings = 0;
+  double ratingSum = 0;
   for (int i = 0; i < neighbors.size(); i++) {
-    Ratings::const_iterator ratingItr = neighbors[i]->cbegin();
-    for (; ratingItr != neighbors[i]->cend(); ratingItr++) {
+    Ratings *neighbor = neighbors[i];
+    Ratings::const_iterator ratingItr = neighbor->cbegin();
+    for (; ratingItr != neighbor->cend(); ratingItr++) {
       if (ratingItr->first == itemId) {
         validRatings++;
         ratingSum += ratingItr->second;
