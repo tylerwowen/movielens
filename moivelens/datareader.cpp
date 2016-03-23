@@ -16,11 +16,13 @@ int readData(string const &filename, UsersMap &users) {
   ifs.imbue(colon);
   int ratingCount = 0;
   
-  while (ifs.good()) {
+  while (true) {
     int userId, itermId, timestamp;
     double rating;
     ifs >>  userId >> itermId >> rating >> timestamp;
-    
+    if (ifs.fail()) {
+      break;
+    }
     Ratings *ratings = &users[userId];
     ratings->insert(pair<int, double>(itermId, rating));
     ratingCount++;

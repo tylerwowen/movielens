@@ -144,7 +144,7 @@ double NeighborsLocator::cosineSimilarity(Ratings &r1, Ratings &r2) {
 
 double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
   double sum1 = 0, sum1SQ = 0,
-  sum2 = 0, sum2SQ, sum12 = 0;
+  sum2 = 0, sum2SQ = 0, sum12 = 0;
   
   for (auto& r: r1) {
     int itemId = r.first;
