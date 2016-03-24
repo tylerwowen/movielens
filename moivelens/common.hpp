@@ -24,17 +24,17 @@
 typedef std::pair<int, double> Rating;
 
 /**
- *  {Rating}
+ *  [{itemId, rating}, ...]
  */
-typedef std::list<Rating> Ratings;
+typedef std::list<std::pair<int, double>> Ratings;
 
 /**
- *  {userId, Ratings}
+ *  [{userId, Ratings}, ...]
  */
 typedef std::unordered_map<int, Ratings> UsersMap;
 
 /**
- *  {Ratings*}
+ *  [{Ratings*}, ...]
  */
 typedef std::vector<Ratings*> UsersPtr;
 

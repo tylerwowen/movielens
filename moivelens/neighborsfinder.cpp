@@ -275,13 +275,11 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
     sum2SQ += rating2 * rating2;
   }
 
-  double covariance = (sum12 - sum1 * sum2 / numOfItems) / numOfItems;
+//  double covariance = (sum12 - sum1 * sum2 / numOfItems) / numOfItems;
   double mean1 = sum1 / numOfItems;
   double mean2 = sum2 / numOfItems;
-  double variance1 = sum1SQ / numOfItems - mean1 * mean1;
-  double variance2 = sum2SQ / numOfItems - mean2 * mean2;
-  
-  return covariance / (sqrt(variance1) * sqrt(variance2));
+
+  return (sum12 - numOfItems * mean1 * mean2) / (sqrt(sum1SQ - numOfItems * mean1 * mean1) * sqrt(sum2SQ - numOfItems * mean2 * mean2));
 }
 
 void sort_nth_elemet(Distances &distances, int k, bool ascending) {
