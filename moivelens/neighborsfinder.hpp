@@ -27,21 +27,26 @@ typedef std::vector<Distance> Distances;
 class NeighborsLocator {
 public:
   NeighborsLocator(UsersMap *trainUsers, int numOfItems);
-  UsersPtr getNeighbors(Ratings *targetUser, int k, int method);
-
+  UsersPtr getNeighbors(int k, int method);
+  UsersPtr getMatchedNeighbors(int k, int method, int targetItem);
+  void setTargetUser(int targetUserId, Ratings *targetUserRatings);
+  
 private:
   UsersMap *trainUsers;
-  Ratings *targetUser;
+  int targetUserId;
+  Ratings *targetUserRatings;
   int numOfItems;
   
+  int targetItemId;
+  
   /**
-   *  Calculates all the distances from `this->targetUser` to all other users
+   *  Calculates all the distances from `this->targetUserRatings` to all other users
    *
    *  @param distances    Calculated results
    *  @param distanceFunc The function used to calculate distances
    */
   void calculateAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
-  
+  void calculateDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
   double euclideanDistance(Ratings &r1, Ratings &r2);
   double cityBlockDistance(Ratings &r1, Ratings &r2);
   double cosineSimilarity(Ratings &r1, Ratings &r2);
@@ -61,4 +66,5 @@ bool cmp(const Distance &a, const Distance &b);
 bool reverseCmp(const Distance &a, const Distance &b);
 
 int defaultRatingForItem(int id);
+bool hasItem(int itemId, Ratings &r);
 #endif /* neighborsfinder_hpp */

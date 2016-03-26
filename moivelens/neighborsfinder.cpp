@@ -14,8 +14,12 @@ NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems) {
   this->numOfItems = numOfItems;
 }
 
-UsersPtr NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) {
-  this->targetUser = targetUser;
+void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRatings) {
+  this->targetUserId = targetUserId;
+  this->targetUserRatings = targetUserRatings;
+}
+
+UsersPtr NeighborsLocator::getNeighbors(int k, int method) {
   Distances distances(trainUsers->size());
   
   switch (method) {
@@ -41,9 +45,46 @@ UsersPtr NeighborsLocator::getNeighbors(Ratings *targetUser, int k, int method) 
   
   UsersPtr neighbors(k);
   
-  for (int i = 1; i <= k; i++) {
+  int start = distances[0].first == targetUserId ? 1 : 0;
+  for (int i = start; i < start + k; i++) {
     int userId = distances[i].first;
-    neighbors[i-1] = &((*trainUsers)[userId]);
+    neighbors[i - start] = &((*trainUsers)[userId]);
+  }
+  return neighbors;
+}
+
+UsersPtr NeighborsLocator::getMatchedNeighbors(int k, int method, int targetItem) {
+  this->targetItemId = targetItem;
+  Distances distances;
+  distances.reserve(100);
+  
+  switch (method) {
+    case COS:
+      calculateDistances(distances, &NeighborsLocator::cosineSimilarity);
+      sort_nth_elemet(distances, k+1, false);
+      break;
+    case L1:
+      calculateDistances(distances, &NeighborsLocator::cityBlockDistance);
+      sort_nth_elemet(distances, k+1, true);
+      break;
+    case L2:
+      calculateDistances(distances, &NeighborsLocator::euclideanDistance);
+      sort_nth_elemet(distances, k+1, true);
+      break;
+    case PCC:
+      calculateDistances(distances, &NeighborsLocator::pcc);
+      sort_nth_elemet(distances, k+1, false);
+      break;
+    default:
+      break;
+  }
+  
+  UsersPtr neighbors;
+  int start = distances[0].first == targetUserId ? 1 : 0;
+  int end = k + start < distances.size() ? k + start : (int)distances.size();
+  for (int i = start; i < end; i++) {
+    int userId = distances[i].first;
+    neighbors.push_back(&((*trainUsers)[userId]));
   }
   return neighbors;
 }
@@ -52,8 +93,16 @@ void NeighborsLocator::calculateAllDistances(Distances &distances, double (Neigh
   int i = 0;
   for (auto& otherUser: *trainUsers) {
     distances[i].first = otherUser.first;
-    distances[i].second = (this->*distanceFunc)(otherUser.second, *targetUser);
+    distances[i].second = (this->*distanceFunc)(otherUser.second, *targetUserRatings);
     i++;
+  }
+}
+
+void NeighborsLocator::calculateDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&)) {
+  for (auto& otherUser: *trainUsers) {
+    if (hasItem(targetItemId, otherUser.second)) {
+      distances.push_back({otherUser.first, (this->*distanceFunc)(otherUser.second, *targetUserRatings)});
+    }
   }
 }
 
@@ -275,7 +324,6 @@ double NeighborsLocator::pcc(Ratings &r1, Ratings &r2) {
     sum2SQ += rating2 * rating2;
   }
 
-//  double covariance = (sum12 - sum1 * sum2 / numOfItems) / numOfItems;
   double mean1 = sum1 / numOfItems;
   double mean2 = sum2 / numOfItems;
 
@@ -303,4 +351,14 @@ bool reverseCmp(const Distance &a, const Distance &b) {
 
 int defaultRatingForItem(int id) {
   return 0;
+}
+
+bool hasItem(int itemId, Ratings &r) {
+  Ratings::const_iterator rIter = r.cbegin();
+  for (; rIter != r.cend(); rIter++) {
+    if (rIter->first == itemId) {
+      return true;
+    }
+  }
+  return false;
 }

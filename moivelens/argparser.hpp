@@ -24,6 +24,7 @@ static struct argp_option options[] = {
   {"movie-num",  'm', "number",   0, "Max number of movies"},
   {"user-num",   'u', "number",   0, "Max number of users"},
   {"neighbor-num",'k', "number",  0, "Number of neighbora."},
+  {"matched-only", 'o', 0,        0, "Only include neighbors that have matched item"},
   { 0 }
 };
 
@@ -34,6 +35,7 @@ struct arguments {
   int moiveNum;
   int method;
   int k;
+  bool matchedOnly;
 };
 
 error_t parse_opt (int key, char *arg, struct argp_state *state);

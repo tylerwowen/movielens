@@ -33,6 +33,8 @@ error_t parse_opt (int key, char *arg, struct argp_state *state) {
     case 'k':
       arguments->k = atoi(arg);
       break;
+    case 'o':
+      arguments->matchedOnly = true;
     case ARGP_KEY_END:
       if (state->argc < 2) {
         /* No inputs. */
