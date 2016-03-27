@@ -35,6 +35,10 @@ error_t parse_opt (int key, char *arg, struct argp_state *state) {
       break;
     case 'o':
       arguments->matchedOnly = true;
+      break;
+    case 'p':
+      arguments->prettyPrint = true;
+      break;
     case ARGP_KEY_END:
       if (state->argc < 2) {
         /* No inputs. */

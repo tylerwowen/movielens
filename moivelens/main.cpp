@@ -41,6 +41,7 @@ int main(int argc, char ** argv) {
   struct arguments args;
   args.method = 0;
   args.matchedOnly = false;
+  args.prettyPrint = false;
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
@@ -86,9 +87,19 @@ int main(int argc, char ** argv) {
       }
     }
   }
-  cout << "MAE = " << sum / testSize << endl;
-  cout << "RMSE = " << sqrt(sumSQ / testSize) << endl;
-  cout << "Recall = " << (double)predictedCount / (double)testSize * 100 << "%" << endl;
+  double mae = sum / testSize,
+  rmse = sqrt(sumSQ / testSize),
+  recall = (double)predictedCount / (double)testSize;
+  
+  if (args.prettyPrint) {
+    cout << "MAE = " << mae << endl;
+    cout << "RMSE = " << rmse << endl;
+    cout << "Recall = " << recall << "%" << endl;
+  }
+  else {
+    cout << mae << " " << rmse << " " <<  recall << " ";
+  }
+  
   exit(0);
 }
 

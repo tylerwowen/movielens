@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-               BuildableName = "moivelens"
-               BlueprintName = "moivelens"
+               BuildableName = "movielens"
+               BlueprintName = "movielens"
                ReferencedContainer = "container:moivelens.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "moivelens"
-            BlueprintName = "moivelens"
+            BuildableName = "movielens"
+            BlueprintName = "movielens"
             ReferencedContainer = "container:moivelens.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -57,15 +57,15 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "moivelens"
-            BlueprintName = "moivelens"
+            BuildableName = "movielens"
+            BlueprintName = "movielens"
             ReferencedContainer = "container:moivelens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-k 5"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o"
@@ -73,7 +73,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-d 1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-d 2"
@@ -105,19 +105,23 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-m 1682"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-u 1000"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-r ./data/u1.base"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-k5 -d0 -m1682 -u1000 -r ../../data/ml-100k/u1.base -t ../../data/ml-100k/u1.test -o"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-t ./data/u1.test"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-r ./data10M/ratings.dat"
@@ -143,8 +147,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "moivelens"
-            BlueprintName = "moivelens"
+            BuildableName = "movielens"
+            BlueprintName = "movielens"
             ReferencedContainer = "container:moivelens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

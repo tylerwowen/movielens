@@ -18,13 +18,14 @@ static const char *program_version = "moivelens v0.1 Weimin Ouyang";
 static char doc[] = "Movie lens data analyzer";
 
 static struct argp_option options[] = {
-  {"train-data", 'r', "file",     0, "Path to training data"},
-  {"test-data",  't', "file",     0, "Path to test data" },
-  {"method",     'd', "method",   0, "Method used for similarity measure.\n0: COS, 1: L1, 2: L2, 3: PCC" },
-  {"movie-num",  'm', "number",   0, "Max number of movies"},
-  {"user-num",   'u', "number",   0, "Max number of users"},
-  {"neighbor-num",'k', "number",  0, "Number of neighbora."},
-  {"matched-only", 'o', 0,        0, "Only include neighbors that have matched item"},
+  {"train-data",  'r', "file",     0, "Path to training data"},
+  {"test-data",   't', "file",     0, "Path to test data" },
+  {"method",      'd', "method",   0, "Method used for similarity measure.\n0: COS, 1: L1, 2: L2, 3: PCC" },
+  {"movie-num",   'm', "number",   0, "Max number of movies"},
+  {"user-num",    'u', "number",   0, "Max number of users"},
+  {"neighbor-num",'k', "number",   0, "Number of neighbora."},
+  {"matched-only",'o', 0,          0, "Only include neighbors that have matched item"},
+  {"pretty-print",'p', 0,          0, "Print results in a human-redable way"},
   { 0 }
 };
 
@@ -36,6 +37,7 @@ struct arguments {
   int method;
   int k;
   bool matchedOnly;
+  bool prettyPrint;
 };
 
 error_t parse_opt (int key, char *arg, struct argp_state *state);
