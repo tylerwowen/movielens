@@ -49,16 +49,17 @@ int main(int argc, char ** argv) {
   readData(args.trainFile, trainUsers);
   int testSize = readData(args.testFile, testUsers);
 
-  NeighborsLocator locator(&trainUsers, args.moiveNum);
+  NeighborsLocator locator(&trainUsers, args.moiveNum, args.k, args.method);
   double sum = 0, sumSQ = 0;
   int predictedCount = 0;
   
   if (args.matchedOnly) {
     for (auto& user: testUsers) {
       locator.setTargetUser(user.first, &(user.second));
+      locator.calculateDistancesToNeighbors();
       
       for (auto& rating: user.second) {
-        UsersPtr neighbors = locator.getMatchedNeighbors(args.k, args.method, rating.first);
+        UsersPtr neighbors = locator.getMatchedKNeighbors(rating.first);
         double actual = rating.second;
         double prediction = getPredication(neighbors, rating.first);
         if (prediction == 0) {
@@ -73,7 +74,7 @@ int main(int argc, char ** argv) {
   else {
     for (auto& user: testUsers) {
       locator.setTargetUser(user.first, &(user.second));
-      UsersPtr neighbors = locator.getNeighbors(args.k, args.method);
+      UsersPtr neighbors = locator.getNeighbors();
       
       for (auto& rating: user.second) {
         double actual = rating.second;

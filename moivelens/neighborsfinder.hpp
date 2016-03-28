@@ -26,17 +26,23 @@ typedef std::vector<Distance> Distances;
 
 class NeighborsLocator {
 public:
-  NeighborsLocator(UsersMap *trainUsers, int numOfItems);
-  UsersPtr getNeighbors(int k, int method);
-  UsersPtr getMatchedNeighbors(int k, int method, int targetItem);
+  NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method);
+  ~NeighborsLocator();
+  UsersPtr getNeighbors();
+  UsersPtr getMatchedKNeighbors(int targetItem);
   void setTargetUser(int targetUserId, Ratings *targetUserRatings);
+  void calculateDistancesToNeighbors();
   
 private:
   UsersMap *trainUsers;
+  int numOfItems;
+  int k;
+  int method;
+  
   int targetUserId;
   Ratings *targetUserRatings;
-  int numOfItems;
   
+  Distances *cachedDistances;
   int targetItemId;
   
   /**

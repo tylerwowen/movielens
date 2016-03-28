@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,7 +41,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2FDBA6351C7A8425002E3B7E /* moivelens */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = moivelens; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FDBA6351C7A8425002E3B7E /* movielens */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = movielens; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDBA6381C7A8425002E3B7E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datareader.cpp; sourceTree = "<group>"; };
 		2FDBA6431C7AE3F9002E3B7E /* datareader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = datareader.hpp; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		2FDBA6361C7A8425002E3B7E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2FDBA6351C7A8425002E3B7E /* moivelens */,
+				2FDBA6351C7A8425002E3B7E /* movielens */,
 				2FDBA64A1C7BB965002E3B7E /* UnitTests */,
 			);
 			name = Products;
@@ -141,7 +141,7 @@
 			);
 			name = movielens;
 			productName = moivelens;
-			productReference = 2FDBA6351C7A8425002E3B7E /* moivelens */;
+			productReference = 2FDBA6351C7A8425002E3B7E /* movielens */;
 			productType = "com.apple.product-type.tool";
 		};
 		2FDBA6491C7BB965002E3B7E /* UnitTests */ = {
@@ -179,7 +179,7 @@
 				};
 			};
 			buildConfigurationList = 2FDBA6301C7A8425002E3B7E /* Build configuration list for PBXProject "moivelens" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

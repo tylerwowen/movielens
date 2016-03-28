@@ -96,11 +96,11 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-r ./data10M/r1.train"
+            argument = "-r ./data/ml-10M100k/r1.train"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-t ./data10M/r1.test"
+            argument = "-t ./data/ml-10M100k/r1.test"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -112,24 +112,16 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-r ./data/u1.base"
+            argument = "-r ./data/ml-100k/u1.base"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-k5 -d0 -m1682 -u1000 -r ../../data/ml-100k/u1.base -t ../../data/ml-100k/u1.test -o"
+            argument = "-t ./data/ml-100k/u1.test"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-k5 -d0 -m1682 -u1000 -r ./data/ml-100k/u1.base -t ./data/ml-100k/u1.test -o"
             isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-t ./data/u1.test"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-r ./data10M/ratings.dat"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-r ./data/u.data"
-            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

@@ -9,9 +9,18 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems) {
+NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method) {
   this->trainUsers = trainUsers;
   this->numOfItems = numOfItems;
+  this->k = k;
+  this->method = method;
+  this->cachedDistances = NULL;
+}
+
+NeighborsLocator::~NeighborsLocator() {
+  if (this->cachedDistances != NULL) {
+    delete this->cachedDistances;
+  }
 }
 
 void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRatings) {
@@ -19,7 +28,7 @@ void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRating
   this->targetUserRatings = targetUserRatings;
 }
 
-UsersPtr NeighborsLocator::getNeighbors(int k, int method) {
+UsersPtr NeighborsLocator::getNeighbors() {
   Distances distances(trainUsers->size());
   
   switch (method) {
@@ -53,7 +62,31 @@ UsersPtr NeighborsLocator::getNeighbors(int k, int method) {
   return neighbors;
 }
 
-UsersPtr NeighborsLocator::getMatchedNeighbors(int k, int method, int targetItem) {
+void NeighborsLocator::calculateDistancesToNeighbors() {
+  if (cachedDistances != NULL) {
+    delete cachedDistances;
+  }
+  cachedDistances = new Distances(trainUsers->size());
+  
+  switch (method) {
+    case COS:
+      calculateAllDistances(*cachedDistances, &NeighborsLocator::cosineSimilarity);
+      break;
+    case L1:
+      calculateAllDistances(*cachedDistances, &NeighborsLocator::cityBlockDistance);
+      break;
+    case L2:
+      calculateAllDistances(*cachedDistances, &NeighborsLocator::euclideanDistance);
+      break;
+    case PCC:
+      calculateAllDistances(*cachedDistances, &NeighborsLocator::pcc);
+      break;
+    default:
+      break;
+  }
+}
+
+UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
   this->targetItemId = targetItem;
   Distances distances;
   distances.reserve(100);
@@ -103,9 +136,9 @@ void NeighborsLocator::calculateAllDistances(Distances &distances, double (Neigh
 }
 
 void NeighborsLocator::calculateDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&)) {
-  for (auto& otherUser: *trainUsers) {
-    if (hasItem(targetItemId, otherUser.second)) {
-      distances.push_back({otherUser.first, (this->*distanceFunc)(otherUser.second, *targetUserRatings)});
+  for (auto& distance: *cachedDistances) {
+    if (hasItem(targetItemId, (*trainUsers)[distance.first])) {
+      distances.push_back(distance);
     }
   }
 }
