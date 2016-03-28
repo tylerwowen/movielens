@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FDBA6391C7A8425002E3B7E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6381C7A8425002E3B7E /* main.cpp */; };
 		2FDBA6441C7AE3F9002E3B7E /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
 		2FDBA6521C7BBA15002E3B7E /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDBA6511C7BBA15002E3B7E /* gtest.framework */; };
 		2FDBA6531C7BC0B8002E3B7E /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
@@ -17,6 +16,7 @@
 		2FDBA6641C7D8567002E3B7E /* libargp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDBA6631C7D8567002E3B7E /* libargp.a */; };
 		2FF56C8C1CA3525D00B83F16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FF56C8A1CA3523E00B83F16 /* main.cpp */; };
 		2FF56C8E1CA3531E00B83F16 /* similarity_measurement_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FF56C8D1CA3531E00B83F16 /* similarity_measurement_tests.cpp */; };
+		2FF56C931CA7C2B900B83F16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6381C7A8425002E3B7E /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -203,7 +203,7 @@
 			files = (
 				2FDBA6591C7C0065002E3B7E /* neighborsfinder.cpp in Sources */,
 				2FDBA6601C7D8227002E3B7E /* argparser.cpp in Sources */,
-				2FDBA6391C7A8425002E3B7E /* main.cpp in Sources */,
+				2FF56C931CA7C2B900B83F16 /* main.cpp in Sources */,
 				2FDBA6441C7AE3F9002E3B7E /* datareader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

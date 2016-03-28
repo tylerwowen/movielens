@@ -59,22 +59,26 @@ UsersPtr NeighborsLocator::getMatchedNeighbors(int k, int method, int targetItem
   distances.reserve(100);
   
   switch (method) {
-    case COS:
+    case COS: {
       calculateDistances(distances, &NeighborsLocator::cosineSimilarity);
-      sort_nth_elemet(distances, k+1, false);
-      break;
-    case L1:
+      int n = k+1 <= distances.size() - 1 ? k+1 : (int)distances.size() - 1;
+      sort_nth_elemet(distances, n, false);
+      break;}
+    case L1: {
       calculateDistances(distances, &NeighborsLocator::cityBlockDistance);
-      sort_nth_elemet(distances, k+1, true);
-      break;
-    case L2:
+      int n = k+1 <= distances.size() - 1 ? k+1 : (int)distances.size() - 1;
+      sort_nth_elemet(distances, n, true);
+      break;}
+    case L2: {
       calculateDistances(distances, &NeighborsLocator::euclideanDistance);
-      sort_nth_elemet(distances, k+1, true);
-      break;
-    case PCC:
+      int n = k+1 <= distances.size() - 1 ? k+1 : (int)distances.size() - 1;
+      sort_nth_elemet(distances, n, true);
+      break; }
+    case PCC: {
       calculateDistances(distances, &NeighborsLocator::pcc);
-      sort_nth_elemet(distances, k+1, false);
-      break;
+      int n = k+1 <= distances.size() - 1 ? k+1 : (int)distances.size() - 1;
+      sort_nth_elemet(distances, n, false);
+      break; }
     default:
       break;
   }
