@@ -14,13 +14,6 @@ NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, 
   this->numOfItems = numOfItems;
   this->k = k;
   this->method = method;
-  this->cachedDistances = NULL;
-}
-
-NeighborsLocator::~NeighborsLocator() {
-  if (this->cachedDistances != NULL) {
-    delete this->cachedDistances;
-  }
 }
 
 void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRatings) {
@@ -33,19 +26,19 @@ UsersPtr NeighborsLocator::getNeighbors() {
   
   switch (method) {
     case COS:
-      calculateAllDistances(distances, &NeighborsLocator::cosineSimilarity);
+      calculateSortableAllDistances(distances, &NeighborsLocator::cosineSimilarity);
       sort_nth_elemet(distances, k+1, false);
       break;
     case L1:
-      calculateAllDistances(distances, &NeighborsLocator::cityBlockDistance);
+      calculateSortableAllDistances(distances, &NeighborsLocator::cityBlockDistance);
       sort_nth_elemet(distances, k+1, true);
       break;
     case L2:
-      calculateAllDistances(distances, &NeighborsLocator::euclideanDistance);
+      calculateSortableAllDistances(distances, &NeighborsLocator::euclideanDistance);
       sort_nth_elemet(distances, k+1, true);
       break;
     case PCC:
-      calculateAllDistances(distances, &NeighborsLocator::pcc);
+      calculateSortableAllDistances(distances, &NeighborsLocator::pcc);
       sort_nth_elemet(distances, k+1, false);
       break;
     default:
@@ -62,24 +55,20 @@ UsersPtr NeighborsLocator::getNeighbors() {
   return neighbors;
 }
 
-void NeighborsLocator::calculateDistancesToNeighbors() {
-  if (cachedDistances != NULL) {
-    delete cachedDistances;
-  }
-  cachedDistances = new Distances(trainUsers->size());
-  
+void NeighborsLocator::calculateDistancesToNeighbors(int numUsers) {
+  cachedDistances.assign(numUsers, 0.0);
   switch (method) {
     case COS:
-      calculateAllDistances(*cachedDistances, &NeighborsLocator::cosineSimilarity);
+      calculateAllDistances(&NeighborsLocator::cosineSimilarity);
       break;
     case L1:
-      calculateAllDistances(*cachedDistances, &NeighborsLocator::cityBlockDistance);
+      calculateAllDistances(&NeighborsLocator::cityBlockDistance);
       break;
     case L2:
-      calculateAllDistances(*cachedDistances, &NeighborsLocator::euclideanDistance);
+      calculateAllDistances(&NeighborsLocator::euclideanDistance);
       break;
     case PCC:
-      calculateAllDistances(*cachedDistances, &NeighborsLocator::pcc);
+      calculateAllDistances(&NeighborsLocator::pcc);
       break;
     default:
       break;
@@ -117,7 +106,7 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
   return neighbors;
 }
 
-void NeighborsLocator::calculateAllDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&)) {
+void NeighborsLocator::calculateSortableAllDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&)) {
   int i = 0;
   for (auto& otherUser: *trainUsers) {
     distances[i].first = otherUser.first;
@@ -126,13 +115,21 @@ void NeighborsLocator::calculateAllDistances(Distances &distances, double (Neigh
   }
 }
 
+void NeighborsLocator::calculateAllDistances(double (NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&)) {
+  for (auto& otherUser: *trainUsers) {
+    cachedDistances[otherUser.first] = (this->*distanceFunc)(otherUser.second.r_list, targetUserRatings->r_list);
+  }
+}
+
 void NeighborsLocator::calculateDistances(Distances &distances) {
-  for (auto& distance: *cachedDistances) {
-    Ratings *ratings = &(*trainUsers)[distance.first];
-    Ratings_map::const_iterator ratingItr = ratings->r_map.find(targetItemId);
-    if (ratingItr != ratings->r_map.end()) {
-      distances.push_back(distance);
+  int i = 0;
+  for (auto& otherUser: *trainUsers) {
+    Ratings_map *ratings = &otherUser.second.r_map;
+    Ratings_map::const_iterator ratingItr = ratings->find(targetItemId);
+    if (ratingItr != ratings->end()) {
+      distances.push_back({otherUser.first, cachedDistances[otherUser.first]});
     }
+    i++;
   }
 }
 

@@ -27,11 +27,10 @@ typedef std::vector<Distance> Distances;
 class NeighborsLocator {
 public:
   NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method);
-  ~NeighborsLocator();
   UsersPtr getNeighbors();
   UsersPtr getMatchedKNeighbors(int targetItem);
   void setTargetUser(int targetUserId, Ratings *targetUserRatings);
-  void calculateDistancesToNeighbors();
+  void calculateDistancesToNeighbors(int numUsers);
   
 private:
   UsersMap *trainUsers;
@@ -42,7 +41,7 @@ private:
   int targetUserId;
   Ratings *targetUserRatings;
   
-  Distances *cachedDistances;
+  std::vector<double> cachedDistances;
   int targetItemId;
   
   /**
@@ -51,7 +50,8 @@ private:
    *  @param distances    Calculated results
    *  @param distanceFunc The function used to calculate distances
    */
-  void calculateAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&));
+  void calculateSortableAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&));
+  void calculateAllDistances(double(NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&));
   void calculateDistances(Distances &distances);
   double euclideanDistance(Ratings_list &r1, Ratings_list &r2);
   double cityBlockDistance(Ratings_list &r1, Ratings_list &r2);

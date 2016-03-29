@@ -52,7 +52,7 @@ int main(int argc, char ** argv) {
   if (args.matchedOnly) {
     for (auto& user: testUsers) {
       locator.setTargetUser(user.first, &(user.second));
-      locator.calculateDistancesToNeighbors();
+      locator.calculateDistancesToNeighbors(args.userNum);
       
       for (auto& rating: user.second.r_list) {
         UsersPtr neighbors = locator.getMatchedKNeighbors(rating.first);
