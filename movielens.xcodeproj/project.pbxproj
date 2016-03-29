@@ -114,8 +114,7 @@
 				2FDBA65E1C7D8227002E3B7E /* argparser.cpp */,
 				2FDBA65F1C7D8227002E3B7E /* argparser.hpp */,
 			);
-			name = movielens;
-			path = moivelens;
+			path = movielens;
 			sourceTree = "<group>";
 		};
 		2FDBA64B1C7BB965002E3B7E /* UnitTests */ = {

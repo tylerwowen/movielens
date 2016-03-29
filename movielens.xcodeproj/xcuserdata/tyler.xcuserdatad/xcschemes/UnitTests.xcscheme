@@ -35,7 +35,7 @@
             BlueprintIdentifier = "2FDBA6491C7BB965002E3B7E"
             BuildableName = "UnitTests"
             BlueprintName = "UnitTests"
-            ReferencedContainer = "container:moivelens.xcodeproj">
+            ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "2FDBA6491C7BB965002E3B7E"
             BuildableName = "UnitTests"
             BlueprintName = "UnitTests"
-            ReferencedContainer = "container:moivelens.xcodeproj">
+            ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>

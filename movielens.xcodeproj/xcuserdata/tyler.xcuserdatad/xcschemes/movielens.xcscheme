@@ -35,7 +35,7 @@
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
             BuildableName = "movielens"
             BlueprintName = "movielens"
-            ReferencedContainer = "container:moivelens.xcodeproj">
+            ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -47,7 +47,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/moivelens/moivelens"
+      customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/movielens/movielens"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -59,7 +59,7 @@
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
             BuildableName = "movielens"
             BlueprintName = "movielens"
-            ReferencedContainer = "container:moivelens.xcodeproj">
+            ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

@@ -52,9 +52,10 @@ for set in $DATA_SETS; do
 
           command2="$EXECUTABLE -k$k -d$method -m${MOVIES[$INDEX]} -u${USERS[$INDEX]} -r$BASE -t$TEST -o"
           echo $command2
-          result2=$( { time $command2; } 2>&1)
-          echo "$k $method ${MOVIES[$INDEX]} ${USERS[$INDEX]} u$i.base u$i.test $result2 1" >> $OUTPUT
+          # result2=$( { time $command2; } 2>&1)
+          echo "$k $method ${MOVIES[$INDEX]} ${USERS[$INDEX]} u$i.base u$i.test $( { time $command2; } 2>&1) 1" >> $OUTPUT &
         done
+        wait
       done
     done
   done
