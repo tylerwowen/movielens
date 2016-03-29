@@ -122,14 +122,12 @@ void NeighborsLocator::calculateAllDistances(double (NeighborsLocator::*distance
 }
 
 void NeighborsLocator::calculateDistances(Distances &distances) {
-  int i = 0;
   for (auto& otherUser: *trainUsers) {
     Ratings_map *ratings = &otherUser.second.r_map;
     Ratings_map::const_iterator ratingItr = ratings->find(targetItemId);
     if (ratingItr != ratings->end()) {
       distances.push_back({otherUser.first, cachedDistances[otherUser.first]});
     }
-    i++;
   }
 }
 
