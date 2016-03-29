@@ -21,14 +21,10 @@ double getPredication(UsersPtr neighbors, int itemId) {
   int validRatings = 0;
   double ratingSum = 0;
   for (int i = 0; i < neighbors.size(); i++) {
-    Ratings *neighbor = neighbors[i];
-    Ratings::const_iterator ratingItr = neighbor->cbegin();
-    for (; ratingItr != neighbor->cend(); ratingItr++) {
-      if (ratingItr->first == itemId) {
-        validRatings++;
-        ratingSum += ratingItr->second;
-        break;
-      }
+    Ratings_map::const_iterator ratingItr = neighbors[i]->r_map.find(itemId);
+    if (ratingItr != neighbors[i]->r_map.end()) {
+      validRatings++;
+      ratingSum += ratingItr->second;
     }
   }
   if (validRatings == 0) {
@@ -58,7 +54,7 @@ int main(int argc, char ** argv) {
       locator.setTargetUser(user.first, &(user.second));
       locator.calculateDistancesToNeighbors();
       
-      for (auto& rating: user.second) {
+      for (auto& rating: user.second.r_list) {
         UsersPtr neighbors = locator.getMatchedKNeighbors(rating.first);
         double actual = rating.second;
         double prediction = getPredication(neighbors, rating.first);
@@ -76,7 +72,7 @@ int main(int argc, char ** argv) {
       locator.setTargetUser(user.first, &(user.second));
       UsersPtr neighbors = locator.getNeighbors();
       
-      for (auto& rating: user.second) {
+      for (auto& rating: user.second.r_list) {
         double actual = rating.second;
         double prediction = getPredication(neighbors, rating.first);
         if (prediction == 0) {

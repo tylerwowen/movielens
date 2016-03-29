@@ -10,10 +10,6 @@
 
 using namespace std;
 
-bool compare(const Rating &a, const Rating &b) {
-  return a.first < b.first;
-}
-
 int readData(string const &filename, UsersMap &users) {
   ifstream ifs(filename);
   locale colon(std::locale::classic(), new my_ctype);
@@ -28,11 +24,11 @@ int readData(string const &filename, UsersMap &users) {
       break;
     }
     Ratings *ratings = &users[userId];
-    ratings->emplace_back(itermId, rating);
+    ratings->insert(itermId, rating);
     ratingCount++;
   }
   for (auto& user: users) {
-    user.second.sort(compare);
+    user.second.sortList();
   }
   
   return ratingCount;

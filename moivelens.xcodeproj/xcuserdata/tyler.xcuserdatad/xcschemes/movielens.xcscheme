@@ -123,6 +123,10 @@
             argument = "-k5 -d0 -m1682 -u1000 -r ./data/ml-100k/u1.base -t ./data/ml-100k/u1.test -o"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test -o"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

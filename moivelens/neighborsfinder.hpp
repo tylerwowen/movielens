@@ -51,12 +51,12 @@ private:
    *  @param distances    Calculated results
    *  @param distanceFunc The function used to calculate distances
    */
-  void calculateAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
-  void calculateDistances(Distances &distances, double (NeighborsLocator::*distanceFunc)(Ratings&, Ratings&));
-  double euclideanDistance(Ratings &r1, Ratings &r2);
-  double cityBlockDistance(Ratings &r1, Ratings &r2);
-  double cosineSimilarity(Ratings &r1, Ratings &r2);
-  double pcc(Ratings &r1, Ratings &r2);
+  void calculateAllDistances(Distances &distances, double(NeighborsLocator::*distanceFunc)(Ratings_list&, Ratings_list&));
+  void calculateDistances(Distances &distances);
+  double euclideanDistance(Ratings_list &r1, Ratings_list &r2);
+  double cityBlockDistance(Ratings_list &r1, Ratings_list &r2);
+  double cosineSimilarity(Ratings_list &r1, Ratings_list &r2);
+  double pcc(Ratings_list &r1, Ratings_list &r2);
 };
 
 /**
@@ -72,5 +72,4 @@ bool cmp(const Distance &a, const Distance &b);
 bool reverseCmp(const Distance &a, const Distance &b);
 
 int defaultRatingForItem(int id);
-bool hasItem(int itemId, Ratings &r);
 #endif /* neighborsfinder_hpp */

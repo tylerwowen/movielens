@@ -26,7 +26,16 @@ typedef std::pair<int, double> Rating;
 /**
  *  [{itemId, rating}, ...]
  */
-typedef std::list<std::pair<int, double>> Ratings;
+typedef std::list<std::pair<int, double>> Ratings_list;
+typedef std::unordered_map<int, double> Ratings_map;
+
+class Ratings {
+public:
+  Ratings_list r_list;
+  Ratings_map r_map;
+  void insert(int itemId, double rating);
+  void sortList();
+};
 
 /**
  *  [{userId, Ratings}, ...]
