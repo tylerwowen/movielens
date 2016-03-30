@@ -315,6 +315,7 @@
 					"/usr/local/Cellar/argp-standalone/1.3/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
@@ -328,6 +329,7 @@
 					"/usr/local/Cellar/argp-standalone/1.3/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USE_HEADERMAP = YES;
 			};
 			name = Release;
 		};

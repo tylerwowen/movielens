@@ -25,7 +25,7 @@ static struct argp_option options[] = {
   {"user-num",    'u', "number",   0, "Max number of users"},
   {"neighbor-num",'k', "number",   0, "Number of neighbora."},
   {"matched-only",'o', 0,          0, "Only include neighbors that have matched item"},
-  {"pretty-print",'p', 0,          0, "Print results in a human-redable way"},
+  {"pretty-print",'p', 0,          0, "Print results in a human-readable way"},
   { 0 }
 };
 
