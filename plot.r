@@ -1,57 +1,58 @@
 #!/usr/bin/env Rscript
 
 library(ggplot2)
+pdf( "Rplots.pdf", width = 12, height = 8 )
 
-# All included
-data <- read.table("ml-100k_all_included.txt", header = TRUE)
+prepareData <- function(name) {
+  data <- read.table(name, header = TRUE)
 
-data$k <- as.factor(data[,'k'])
+  data$k <- as.factor(data[,'k'])
+  data$method[data$method==0] <- 'Cosine'
+  data$method[data$method==1] <- 'L1'
+  data$method[data$method==2] <- 'L2'
+  data$method[data$method==3] <- 'PCC'
 
-data$method[data$method==0] <- 'Cosine'
-data$method[data$method==1] <- 'L1'
-data$method[data$method==2] <- 'L2'
-data$method[data$method==3] <- 'PCC'
+  data$matched_only[data$matched_only==0] <- 'All_included'
+  data$matched_only[data$matched_only==1] <- 'Matched_only'
+  return(data)
+}
 
-# MAE-K
-p <- ggplot(data, aes(k, MAE))
-p + geom_boxplot(aes(colour=method)) +
-    labs(x='k', y='MAE', title='MAE-K Plot', colour='Method')
-#ggsave("Plots/MAE_K.pdf")
+plot_all <- function(dataDir1, dataDir2, size) {
+  data1 = prepareData(dataDir1)
+  data2 = prepareData(dataDir2)
+  data = rbind(data1, data2)
 
-# RMSE-K
-p <- ggplot(data, aes(k, RMSE))
-p + geom_boxplot(aes(colour=method)) +
-    labs(x='k', y='RMSE', title='RMSE-K Plot', colour='Method')
-#ggsave("Plots/RMSE_K.pdf")
+  # MAE-K
+  p <- ggplot(data, aes(k, MAE))
+  p <- p + geom_boxplot(aes(colour=method)) +
+      labs(title=paste('MAE-K Plot', size, sep='__'), colour='Method') +
+      facet_grid(. ~ matched_only)
+  print(p)
 
-# Recall-K
-p <- ggplot(data, aes(k, Recall))
-p + geom_boxplot(aes(colour=method)) + 
-    labs(x='k', y='Recall', title='Recall-K Plot', colour='Method')
-#ggsave("Plots/Recall_K.pdf")
+  # RMSE-K
+  p <- ggplot(data, aes(k, RMSE))
+  p <- p + geom_boxplot(aes(colour=method)) +
+      labs(title=paste('RMSE-K Plot', size, sep='__'), colour='Method') +
+      facet_grid(. ~ matched_only)
+  print(p)
 
+  # Recall-K
+  p <- ggplot(data, aes(k, Recall))
+  p <- p + geom_boxplot(aes(colour=method)) +
+      labs(title=paste('Recall-K Plot', size, sep='__'), colour='Method') +
+      facet_grid(. ~ matched_only)
+  print(p)
 
-#  Matched Only
-data <- read.table("ml-100k_matched_only.txt", header = TRUE)
+  # Time-K
+  p <- ggplot(data, aes(k, time))
+  p <- p + geom_boxplot(aes(colour=method)) +
+      labs(title=paste('Time-K Plot', size, sep='__'), colour='Method') +
+      facet_grid(. ~ matched_only)
+  print(p)
+}
 
-data$k <- as.factor(data[,'k'])
+# 100k
+plot_all('raw_results/ml-100k_all_included.txt', 'raw_results/ml-100k_matched_only.txt', '100k');
 
-data$method[data$method==0] <- 'Cosine'
-data$method[data$method==1] <- 'L1'
-data$method[data$method==2] <- 'L2'
-data$method[data$method==3] <- 'PCC'
-
-# MAE-K
-p <- ggplot(data, aes(k, MAE))
-p + geom_boxplot(aes(colour=method)) +
-    labs(x='k', y='MAE', title='MAE-K Plot (Matched Only)', colour='Method')
-
-# RMSE-K
-p <- ggplot(data, aes(k, RMSE))
-p + geom_boxplot(aes(colour=method)) +
-    labs(x='k', y='RMSE', title='RMSE-K Plot (Matched Only)', colour='Method')
-
-# Recall-K
-p <- ggplot(data, aes(k, Recall))
-p + geom_boxplot(aes(colour=method)) +
-    labs(x='k', y='Recall', title='Recall-K Plot (Matched Only)', colour='Method')
+# 1m
+plot_all('raw_results/ml-1m_all_included.txt', 'raw_results/ml-1m_matched_only.txt', '1m');
