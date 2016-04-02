@@ -46,11 +46,12 @@ UsersPtr NeighborsLocator::getNeighbors() {
   }
   
   UsersPtr neighbors(k);
-  
-  int start = distances[0].first == targetUserId ? 1 : 0;
-  for (int i = start; i < start + k; i++) {
-    int userId = distances[i].first;
-    neighbors[i - start] = &((*trainUsers)[userId]);
+  for (int i = 0, j = 0; i < k; j++) {
+    int userId = distances[j].first;
+    if (userId == targetUserId) {
+      continue;
+    }
+    neighbors[i++] = &((*trainUsers)[userId]);
   }
   return neighbors;
 }
@@ -97,11 +98,17 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
   }
   
   UsersPtr neighbors;
-  int start = distances[0].first == targetUserId ? 1 : 0;
-  int end = k + start < distances.size() ? k + start : (int)distances.size();
-  for (int i = start; i < end; i++) {
-    int userId = distances[i].first;
+  int end = k < distances.size() ? k : (int)distances.size();
+  for (int i = 0, j = 0; i < end; j++) {
+    int userId = distances[j].first;
+    if (userId == targetUserId) {
+      if (end != k) {
+        end--;
+      }
+      continue;
+    }
     neighbors.push_back(&((*trainUsers)[userId]));
+    i++;
   }
   return neighbors;
 }
@@ -133,7 +140,6 @@ void NeighborsLocator::calculateDistances(Distances &distances) {
 
 double NeighborsLocator::euclideanDistance(Ratings_list &r1, Ratings_list &r2) {
   double distance = 0;
-  // assume that the moive ids are from 1 to numOfItems
   Ratings_list::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
   while (iter1 != r1.cend() && iter2 != r2.cend()) {
     double rating1 = 0, rating2 = 0;

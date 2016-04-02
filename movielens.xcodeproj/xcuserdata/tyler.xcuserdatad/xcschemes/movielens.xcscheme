@@ -43,8 +43,8 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Release"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/movielens"
@@ -96,7 +96,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-r ./data/ml-10M100k/r1.train"
+            argument = "-r ./data/ml-10M100k/r1.base"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -121,11 +121,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-k5 -d0 -m1682 -u1000 -r ./data/ml-100k/u1.base -t ./data/ml-100k/u1.test -o"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test -o"
-            isEnabled = "NO">
+            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test "
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
@@ -136,7 +136,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/moivelens/moivelens"
+      customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/movielens"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
@@ -145,7 +145,7 @@
             BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
             BuildableName = "movielens"
             BlueprintName = "movielens"
-            ReferencedContainer = "container:moivelens.xcodeproj">
+            ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
