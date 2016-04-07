@@ -43,8 +43,8 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Release"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/movielens"
@@ -120,12 +120,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-k5 -d0 -m1682 -u1000 -r ./data/ml-100k/u1.base -t ./data/ml-100k/u1.test -o"
-            isEnabled = "NO">
+            argument = "-k5 -d3 -m1682 -u1000 -r ./data/ml-100k/u5.base -t ./data/ml-100k/u5.test -o"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test "
-            isEnabled = "YES">
+            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test -o"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

@@ -44,14 +44,21 @@ int main(int argc, char ** argv) {
   UsersMap trainUsers(args.userNum), testUsers;
   readData(args.trainFile, trainUsers);
   int testSize = readData(args.testFile, testUsers);
+  int validTestSize = testSize;
 
   NeighborsLocator locator(&trainUsers, args.moiveNum, args.k, args.method);
   double sum = 0, sumSQ = 0;
   int predictedCount = 0;
-  
+  int count_not_found = 0;
   if (args.matchedOnly) {
     for (auto& user: testUsers) {
-      locator.setTargetUser(user.first, &(user.second));
+      UsersMap::iterator trainUserItr = trainUsers.find(user.first);
+      if (trainUserItr == trainUsers.end()) {
+        cout << "not good " << count_not_found++ << " " << user.first << endl;
+        validTestSize--;
+        continue;
+      }
+      locator.setTargetUser(user.first, &trainUserItr->second);
       locator.calculateDistancesToNeighbors(args.userNum);
       
       for (auto& rating: user.second.r_list) {
@@ -69,7 +76,13 @@ int main(int argc, char ** argv) {
   }
   else {
     for (auto& user: testUsers) {
-      locator.setTargetUser(user.first, &(user.second));
+      UsersMap::iterator trainUserItr = trainUsers.find(user.first);
+      if (trainUserItr == trainUsers.end()) {
+        cout << "not good\n" ;
+        validTestSize--;
+        continue;
+      }
+      locator.setTargetUser(user.first, &trainUserItr->second);
       UsersPtr neighbors = locator.getNeighbors();
       
       for (auto& rating: user.second.r_list) {
@@ -84,9 +97,9 @@ int main(int argc, char ** argv) {
       }
     }
   }
-  double mae = sum / testSize,
-  rmse = sqrt(sumSQ / testSize),
-  recall = (double)predictedCount / (double)testSize;
+  double mae = sum / validTestSize,
+  rmse = sqrt(sumSQ / validTestSize),
+  recall = (double)predictedCount / (double)validTestSize;
   
   if (args.prettyPrint) {
     cout << "MAE = " << mae << endl;

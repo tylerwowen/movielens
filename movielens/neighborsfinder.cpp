@@ -57,7 +57,7 @@ UsersPtr NeighborsLocator::getNeighbors() {
 }
 
 void NeighborsLocator::calculateDistancesToNeighbors(int numUsers) {
-  cachedDistances.assign(numUsers, 0.0);
+  cachedDistances.assign(numUsers + 1, 0.0);
   switch (method) {
     case COS:
       calculateAllDistances(&NeighborsLocator::cosineSimilarity);
@@ -82,21 +82,20 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
   distances.reserve(100);
   
   calculateDistances(distances);
-  int n = k+1 <= distances.size() - 1 ? k+1 : (int)distances.size() - 1;
-  
-  switch (method) {
-    case COS:
-    case PCC:
-      sort_nth_elemet(distances, n, false);
-      break;
-    case L1:
-    case L2:
-      sort_nth_elemet(distances, n, true);
-      break;
-    default:
-      break;
+  if (distances.size() > k) {
+    switch (method) {
+      case COS:
+      case PCC:
+        sort_nth_elemet(distances, k + 1, false);
+        break;
+      case L1:
+      case L2:
+        sort_nth_elemet(distances, k + 1, true);
+        break;
+      default:
+        break;
+    }
   }
-  
   UsersPtr neighbors;
   int end = k < distances.size() ? k : (int)distances.size();
   for (int i = 0, j = 0; i < end; j++) {
@@ -110,6 +109,38 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
     neighbors.push_back(&((*trainUsers)[userId]));
     i++;
   }
+//  if (targetUserId == 901 && targetItemId == 1605) {
+//    Ratings_map *ratings = &targetUserRatings->r_map;
+//    for (int i=1; i<=numOfItems; i++) {
+//      
+//      Ratings_map::const_iterator ratingItr = ratings->find(i);
+//      if (ratingItr != ratings->end()) {
+//        cout << ratingItr->second << endl;
+//      }
+//      else {
+//        cout << "0\n" ;
+//      }
+//    }
+//    cout << "new-------\n";
+//    ratings = &neighbors[0]->r_map;
+//    for (int i=1; i<=numOfItems; i++) {
+//      Ratings_map::const_iterator ratingItr = ratings->find(i);
+//      if (ratingItr != ratings->end()) {
+//        cout << ratingItr->second << endl;
+//      }
+//      else {
+//        cout << "0\n" ;
+//      }
+//    }
+//    for (auto& r: targetUserRatings->r_list) {
+//      cout << r.first << " " << r.second << endl;
+//    }
+//    cout << "new\n";
+//    for (auto& r: neighbors[0]->r_list) {
+//      cout << r.first << " " << r.second << endl;
+//    }
+//    cout << "here\n";
+//  }
   return neighbors;
 }
 

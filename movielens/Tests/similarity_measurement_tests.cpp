@@ -20,7 +20,7 @@ namespace {
     NeighborsLocator *sut;
     
     NeighborsLocatorTest() {
-      sut = new NeighborsLocator(NULL, 4);
+      sut = new NeighborsLocator(NULL, 4, 5, 0);
     }
     
     virtual ~NeighborsLocatorTest() {
@@ -30,7 +30,7 @@ namespace {
   
   // MARK: euclideanDistance
   TEST_F(NeighborsLocatorTest, euclideanDistance__identicalVectors__return0) {
-    Ratings r1 = {{1,3}, {2,4}},
+    Ratings_list r1 = {{1,3}, {2,4}},
     r2 = {{1,3}, {2,4}};
     sut->numOfItems = 2;
     
@@ -39,7 +39,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, euclideanDistance__distance_is_2) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
     double distance = sut->euclideanDistance(r1, r2);
@@ -49,7 +49,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, euclideanDistance__different_length) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}};
     
     double distance = sut->euclideanDistance(r1, r2);
@@ -60,7 +60,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, euclideanDistance__complex_input) {
-    Ratings r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
     r2 = {{1,4}, {6,3}, {7,4}};
     sut->numOfItems = 7;
     
@@ -73,7 +73,7 @@ namespace {
   
   // MARK: cityBlockDistance
   TEST_F(NeighborsLocatorTest, cityBlockDistance__identicalVectors__return0) {
-    Ratings r1 = {{1,3}, {2,4}},
+    Ratings_list r1 = {{1,3}, {2,4}},
     r2 = {{1,3}, {2,4}};
     sut->numOfItems = 2;
     
@@ -82,7 +82,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cityBlockDistance__distance_is_4) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
     double distance = sut->cityBlockDistance(r1, r2);
@@ -92,7 +92,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cityBlockDistance__different_length) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}};
     
     double distance = sut->cityBlockDistance(r1, r2);
@@ -103,7 +103,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cityBlockDistance__complex_input) {
-    Ratings r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
     r2 = {{1,4}, {6,3}, {7,4}};
     sut->numOfItems = 7;
     
@@ -116,7 +116,7 @@ namespace {
   
   // MARK: pcc
   TEST_F(NeighborsLocatorTest, pcc__identicalVectors__return_1) {
-    Ratings r1 = {{1,3}, {2,4}},
+    Ratings_list r1 = {{1,3}, {2,4}},
     r2 = {{1,3}, {2,4}};
     sut->numOfItems = 2;
     
@@ -125,7 +125,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, pcc__distance_is_4) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
     double distance = sut->pcc(r1, r2);
@@ -135,7 +135,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, pcc__different_length) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {5,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {5,4}},
     r2 = {{1,4}, {2,3}, {3,4}};
     sut->numOfItems = 5;
     
@@ -147,7 +147,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, pcc__complex_input) {
-    Ratings r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
     r2 = {{1,4}, {6,3}, {7,4}};
     sut->numOfItems = 7;
     
@@ -158,9 +158,21 @@ namespace {
     EXPECT_DOUBLE_EQ(sqrt(7.0/913), distance);
   }
   
+  TEST_F(NeighborsLocatorTest, pcc__complex_input2) {
+    Ratings_list r1 = {{1,1}, {2,3}, {3,2}, {5,4}, {7,4}, {8,2}, {10,3}},
+    r2 = {{1,1}, {2,2}, {3,3}, {6,1}, {7,3}, {9,1}, {10,3}};
+    sut->numOfItems = 10;
+    
+    double distance = sut->pcc(r1, r2);
+    EXPECT_DOUBLE_EQ(7.4/sqrt(22.9*14.4), distance);
+    
+    distance = sut->pcc(r2, r1);
+    EXPECT_DOUBLE_EQ(7.4/sqrt(22.9*14.4), distance);
+  }
+  
   // MARK: cosineSimilarity
   TEST_F(NeighborsLocatorTest, cosineSimilarity__identicalVectors__return_1) {
-    Ratings r1 = {{1,3}, {2,4}},
+    Ratings_list r1 = {{1,3}, {2,4}},
     r2 = {{1,3}, {2,4}};
     sut->numOfItems = 2;
     
@@ -169,7 +181,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cosineSimilarity__distance_is_4) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
     double distance = sut->cosineSimilarity(r1, r2);
@@ -179,7 +191,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cosineSimilarity__different_length) {
-    Ratings r1 = {{1,3}, {2,4}, {3,3}, {5,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {5,4}},
     r2 = {{1,4}, {2,3}, {3,4}};
     sut->numOfItems = 5;
     
@@ -191,7 +203,7 @@ namespace {
   }
   
   TEST_F(NeighborsLocatorTest, cosineSimilarity__complex_input) {
-    Ratings r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
+    Ratings_list r1 = {{1,3}, {2,4}, {4,3}, {6,4}},
     r2 = {{1,4}, {6,3}, {7,4}};
     sut->numOfItems = 7;
     
