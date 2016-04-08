@@ -97,8 +97,8 @@ int main(int argc, char ** argv) {
       }
     }
   }
-  double mae = sum / validTestSize,
-  rmse = sqrt(sumSQ / validTestSize),
+  double mae = sum / predictedCount,
+  rmse = sqrt(sumSQ / predictedCount),
   recall = (double)predictedCount / (double)validTestSize;
   
   if (args.prettyPrint) {

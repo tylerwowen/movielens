@@ -96,6 +96,7 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
         break;
     }
   }
+  
   UsersPtr neighbors;
   int end = k < distances.size() ? k : (int)distances.size();
   for (int i = 0, j = 0; i < end; j++) {
@@ -109,38 +110,6 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
     neighbors.push_back(&((*trainUsers)[userId]));
     i++;
   }
-//  if (targetUserId == 901 && targetItemId == 1605) {
-//    Ratings_map *ratings = &targetUserRatings->r_map;
-//    for (int i=1; i<=numOfItems; i++) {
-//      
-//      Ratings_map::const_iterator ratingItr = ratings->find(i);
-//      if (ratingItr != ratings->end()) {
-//        cout << ratingItr->second << endl;
-//      }
-//      else {
-//        cout << "0\n" ;
-//      }
-//    }
-//    cout << "new-------\n";
-//    ratings = &neighbors[0]->r_map;
-//    for (int i=1; i<=numOfItems; i++) {
-//      Ratings_map::const_iterator ratingItr = ratings->find(i);
-//      if (ratingItr != ratings->end()) {
-//        cout << ratingItr->second << endl;
-//      }
-//      else {
-//        cout << "0\n" ;
-//      }
-//    }
-//    for (auto& r: targetUserRatings->r_list) {
-//      cout << r.first << " " << r.second << endl;
-//    }
-//    cout << "new\n";
-//    for (auto& r: neighbors[0]->r_list) {
-//      cout << r.first << " " << r.second << endl;
-//    }
-//    cout << "here\n";
-//  }
   return neighbors;
 }
 
