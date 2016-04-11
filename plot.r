@@ -1,7 +1,5 @@
 #!/usr/bin/env Rscript
-
 library(ggplot2)
-pdf( "Rplots.pdf", width = 12, height = 8 )
 
 prepareData <- function(name) {
   data <- read.table(name, header = TRUE)
@@ -51,8 +49,17 @@ plot_all <- function(dataDir1, dataDir2, size) {
   print(p)
 }
 
+args = commandArgs(trailingOnly=TRUE)
+root = 'raw_results'
+if (length(args)>0) {
+  pdf( 'Rplots_ignore.pdf', width = 12, height = 8 )
+  root = 'raw_results_ignore'
+} else {
+  pdf( 'Rplots.pdf', width = 12, height = 8 )
+}
+
 # 100k
-plot_all('raw_results/ml-100k_all_included.txt', 'raw_results/ml-100k_matched_only.txt', '100k');
+plot_all(paste(root, 'ml-100k_all_included.txt', sep='/'), paste(root, 'ml-100k_matched_only.txt', sep='/'), '100k');
 
 # 1m
-plot_all('raw_results/ml-1m_all_included.txt', 'raw_results/ml-1m_matched_only.txt', '1m');
+plot_all(paste(root, 'ml-100k_all_included.txt', sep='/'), paste(root, 'ml-100k_matched_only.txt', sep='/'), '1m');

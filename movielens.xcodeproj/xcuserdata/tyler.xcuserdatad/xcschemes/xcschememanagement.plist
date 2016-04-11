@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>ignore_missing.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>movielens.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>2F486FAD1CBB41E90012D98F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2FDBA6341C7A8425002E3B7E</key>
 		<dict>
 			<key>primary</key>

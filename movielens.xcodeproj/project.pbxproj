@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		2F0D07AE1CAA00B000A8A4A0 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D07AD1CAA00B000A8A4A0 /* common.cpp */; };
 		2F0D07AF1CAA00B000A8A4A0 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D07AD1CAA00B000A8A4A0 /* common.cpp */; };
+		2F486FB51CBB41F60012D98F /* neighborsfinder_ignore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F486FA81CBB41BD0012D98F /* neighborsfinder_ignore.cpp */; };
+		2F486FB61CBB420C0012D98F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6381C7A8425002E3B7E /* main.cpp */; };
+		2F486FB71CBB420F0012D98F /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F0D07AD1CAA00B000A8A4A0 /* common.cpp */; };
+		2F486FB81CBB42140012D98F /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
+		2F486FB91CBB42160012D98F /* argparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA65E1C7D8227002E3B7E /* argparser.cpp */; };
+		2F486FBA1CBB42B10012D98F /* libargp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDBA6631C7D8567002E3B7E /* libargp.a */; };
 		2FDBA6441C7AE3F9002E3B7E /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
 		2FDBA6521C7BBA15002E3B7E /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDBA6511C7BBA15002E3B7E /* gtest.framework */; };
 		2FDBA6531C7BC0B8002E3B7E /* datareader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */; };
@@ -22,6 +28,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2F486FAC1CBB41E90012D98F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		2FDBA6331C7A8425002E3B7E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -44,6 +59,9 @@
 
 /* Begin PBXFileReference section */
 		2F0D07AD1CAA00B000A8A4A0 /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
+		2F218E201CBB44BA00A71421 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
+		2F486FA81CBB41BD0012D98F /* neighborsfinder_ignore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = neighborsfinder_ignore.cpp; path = ../movielens/neighborsfinder_ignore.cpp; sourceTree = "<group>"; };
+		2F486FAE1CBB41E90012D98F /* ignore_missing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ignore_missing; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDBA6351C7A8425002E3B7E /* movielens */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = movielens; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDBA6381C7A8425002E3B7E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2FDBA6421C7AE3F9002E3B7E /* datareader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datareader.cpp; sourceTree = "<group>"; };
@@ -62,6 +80,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2F486FAB1CBB41E90012D98F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F486FBA1CBB42B10012D98F /* libargp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FDBA6321C7A8425002E3B7E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,12 +107,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F486FAF1CBB41E90012D98F /* ignore_missing */ = {
+			isa = PBXGroup;
+			children = (
+				2F486FA81CBB41BD0012D98F /* neighborsfinder_ignore.cpp */,
+			);
+			path = ignore_missing;
+			sourceTree = "<group>";
+		};
 		2FDBA62C1C7A8425002E3B7E = {
 			isa = PBXGroup;
 			children = (
 				2FDBA6631C7D8567002E3B7E /* libargp.a */,
 				2FDBA6371C7A8425002E3B7E /* movielens */,
 				2FDBA64B1C7BB965002E3B7E /* UnitTests */,
+				2F486FAF1CBB41E90012D98F /* ignore_missing */,
 				2FDBA6361C7A8425002E3B7E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,6 +131,7 @@
 			children = (
 				2FDBA6351C7A8425002E3B7E /* movielens */,
 				2FDBA64A1C7BB965002E3B7E /* UnitTests */,
+				2F486FAE1CBB41E90012D98F /* ignore_missing */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +139,7 @@
 		2FDBA6371C7A8425002E3B7E /* movielens */ = {
 			isa = PBXGroup;
 			children = (
+				2F218E201CBB44BA00A71421 /* Makefile */,
 				2FF56C8F1CA64E6900B83F16 /* experiement.sh */,
 				2FDBA6381C7A8425002E3B7E /* main.cpp */,
 				2FDBA6451C7B8DA3002E3B7E /* common.hpp */,
@@ -131,6 +168,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2F486FAD1CBB41E90012D98F /* ignore_missing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F486FB21CBB41E90012D98F /* Build configuration list for PBXNativeTarget "ignore_missing" */;
+			buildPhases = (
+				2F486FAA1CBB41E90012D98F /* Sources */,
+				2F486FAB1CBB41E90012D98F /* Frameworks */,
+				2F486FAC1CBB41E90012D98F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ignore_missing;
+			productName = ignore_missing;
+			productReference = 2F486FAE1CBB41E90012D98F /* ignore_missing */;
+			productType = "com.apple.product-type.tool";
+		};
 		2FDBA6341C7A8425002E3B7E /* movielens */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2FDBA63C1C7A8425002E3B7E /* Build configuration list for PBXNativeTarget "movielens" */;
@@ -174,6 +228,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Tyler Ouyang";
 				TargetAttributes = {
+					2F486FAD1CBB41E90012D98F = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					2FDBA6341C7A8425002E3B7E = {
 						CreatedOnToolsVersion = 7.2.1;
 					};
@@ -196,11 +253,24 @@
 			targets = (
 				2FDBA6341C7A8425002E3B7E /* movielens */,
 				2FDBA6491C7BB965002E3B7E /* UnitTests */,
+				2F486FAD1CBB41E90012D98F /* ignore_missing */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2F486FAA1CBB41E90012D98F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F486FB81CBB42140012D98F /* datareader.cpp in Sources */,
+				2F486FB91CBB42160012D98F /* argparser.cpp in Sources */,
+				2F486FB61CBB420C0012D98F /* main.cpp in Sources */,
+				2F486FB71CBB420F0012D98F /* common.cpp in Sources */,
+				2F486FB51CBB41F60012D98F /* neighborsfinder_ignore.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FDBA6311C7A8425002E3B7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +298,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		2F486FB31CBB41E90012D98F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = "/usr/local/Cellar/argp-standalone/1.3/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2F486FB41CBB41E90012D98F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = "/usr/local/Cellar/argp-standalone/1.3/lib";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		2FDBA63A1C7A8425002E3B7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -359,6 +449,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2F486FB21CBB41E90012D98F /* Build configuration list for PBXNativeTarget "ignore_missing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F486FB31CBB41E90012D98F /* Debug */,
+				2F486FB41CBB41E90012D98F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2FDBA6301C7A8425002E3B7E /* Build configuration list for PBXProject "movielens" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

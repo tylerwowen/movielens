@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-               BuildableName = "movielens"
-               BlueprintName = "movielens"
-               ReferencedContainer = "container:moivelens.xcodeproj">
+               BlueprintIdentifier = "2F486FAD1CBB41E90012D98F"
+               BuildableName = "ignore_missing"
+               BlueprintName = "ignore_missing"
+               ReferencedContainer = "container:movielens.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "movielens"
-            BlueprintName = "movielens"
+            BlueprintIdentifier = "2F486FAD1CBB41E90012D98F"
+            BuildableName = "ignore_missing"
+            BlueprintName = "ignore_missing"
             ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -42,7 +42,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -56,76 +56,16 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "movielens"
-            BlueprintName = "movielens"
+            BlueprintIdentifier = "2F486FAD1CBB41E90012D98F"
+            BuildableName = "ignore_missing"
+            BlueprintName = "ignore_missing"
             ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-k 5"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-o"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-d 1"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-d 2"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-d 3"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-d 0"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-m 10681"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-u 71567"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-r ./data/ml-10M100k/r1.base"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-t ./data/ml-10M100k/r1.test"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-m 1682"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-u 1000"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-r ./data/ml-100k/u1.base"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-t ./data/ml-100k/u1.test"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-k5 -d3 -m1682 -u1000 -r ./data/ml-100k/u5.base -t ./data/ml-100k/u5.test -o"
             isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-k5 -d0 -m3952 -u6040 -r./data/ml-1m/u1.base -t./data/ml-1m/u1.test"
-            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
@@ -135,16 +75,15 @@
       buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
-      useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/tyler/Developer/MachineLearning/movielens"
+      useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2FDBA6341C7A8425002E3B7E"
-            BuildableName = "movielens"
-            BlueprintName = "movielens"
+            BlueprintIdentifier = "2F486FAD1CBB41E90012D98F"
+            BuildableName = "ignore_missing"
+            BlueprintName = "ignore_missing"
             ReferencedContainer = "container:movielens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
