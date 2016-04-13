@@ -27,7 +27,7 @@ typedef std::vector<Distance> Distances;
 
 class NeighborsLocator {
 public:
-  NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method);
+  NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method, int maxRating);
   UsersPtr getNeighbors();
   UsersPtr getMatchedKNeighbors(int targetItem);
   void setTargetUser(int targetUserId, Ratings *targetUserRatings);
@@ -38,6 +38,7 @@ private:
   int numOfItems;
   int k;
   int method;
+  int maxRating;
   
   int targetUserId;
   Ratings *targetUserRatings;
@@ -58,6 +59,7 @@ private:
   double cityBlockDistance(Ratings_list &r1, Ratings_list &r2);
   double cosineSimilarity(Ratings_list &r1, Ratings_list &r2);
   double pcc(Ratings_list &r1, Ratings_list &r2);
+  double llr(Ratings_list &r1, Ratings_list &r2);
 };
 
 /**

@@ -38,6 +38,7 @@ int main(int argc, char ** argv) {
   args.method = 0;
   args.matchedOnly = false;
   args.prettyPrint = false;
+  args.maxRating = 5;
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
@@ -46,7 +47,7 @@ int main(int argc, char ** argv) {
   int testSize = readData(args.testFile, testUsers);
   int validTestSize = testSize;
 
-  NeighborsLocator locator(&trainUsers, args.moiveNum, args.k, args.method);
+  NeighborsLocator locator(&trainUsers, args.moiveNum, args.k, args.method, args.maxRating);
   double sum = 0, sumSQ = 0;
   int predictedCount = 0;
   int count_not_found = 0;

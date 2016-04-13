@@ -17,6 +17,7 @@
 #define L1 1
 #define L2 2
 #define PCC 3
+#define LLR 4
 
 /**
  *  {itemId, rating}

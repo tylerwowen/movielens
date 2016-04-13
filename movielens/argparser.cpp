@@ -39,6 +39,9 @@ error_t parse_opt (int key, char *arg, struct argp_state *state) {
     case 'p':
       arguments->prettyPrint = true;
       break;
+    case 'a':
+      arguments->maxRating = atoi(arg);
+      break;
     case ARGP_KEY_END:
       if (state->argc < 2) {
         /* No inputs. */

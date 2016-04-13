@@ -62,4 +62,4 @@ if (length(args)>0) {
 plot_all(paste(root, 'ml-100k_all_included.txt', sep='/'), paste(root, 'ml-100k_matched_only.txt', sep='/'), '100k');
 
 # 1m
-plot_all(paste(root, 'ml-100k_all_included.txt', sep='/'), paste(root, 'ml-100k_matched_only.txt', sep='/'), '1m');
+plot_all(paste(root, 'ml-1m_all_included.txt', sep='/'), paste(root, 'ml-1m_matched_only.txt', sep='/'), '1m');

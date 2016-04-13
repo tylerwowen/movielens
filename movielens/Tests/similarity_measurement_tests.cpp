@@ -20,7 +20,7 @@ namespace {
     NeighborsLocator *sut;
     
     NeighborsLocatorTest() {
-      sut = new NeighborsLocator(NULL, 4, 5, 0);
+      sut = new NeighborsLocator(NULL, 4, 5, 0, 5);
     }
     
     virtual ~NeighborsLocatorTest() {
@@ -124,7 +124,7 @@ namespace {
     EXPECT_DOUBLE_EQ(1, distance);
   }
   
-  TEST_F(NeighborsLocatorTest, pcc__distance_is_4) {
+  TEST_F(NeighborsLocatorTest, pcc__four_ratings) {
     Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
@@ -180,7 +180,7 @@ namespace {
     EXPECT_DOUBLE_EQ(1, distance);
   }
   
-  TEST_F(NeighborsLocatorTest, cosineSimilarity__distance_is_4) {
+  TEST_F(NeighborsLocatorTest, cosineSimilarity__four_ratings) {
     Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
     r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
     
@@ -213,5 +213,50 @@ namespace {
     distance = sut->cosineSimilarity(r2, r1);
     EXPECT_DOUBLE_EQ(24/sqrt(50*41), distance);
   }
+  
+  // MARK: LLR
+  TEST_F(NeighborsLocatorTest, llr__identicalVectors) {
+    Ratings_list r1 = {{1,1}, {2,1}, {6, 2}},
+    r2 = {{1,1}, {2,1}, {6,2}};
+    
+    double distance = sut->llr(r1, r2);
+    EXPECT_DOUBLE_EQ(log10(0.125 / 0.008), distance);
+  }
 
+  TEST_F(NeighborsLocatorTest, llr__four_ratings) {
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {4,4}},
+    r2 = {{1,4}, {2,3}, {3,4}, {4,3}};
+    
+    double expected = log10(pow(0.25, 4) / pow(0.32, 4));
+    double distance = sut->llr(r1, r2);
+    EXPECT_DOUBLE_EQ(expected, distance);
+    
+    distance = sut->llr(r2, r1);
+    EXPECT_DOUBLE_EQ(expected, distance);
+  }
+  
+  TEST_F(NeighborsLocatorTest, llr__different_length) {
+    Ratings_list r1 = {{1,3}, {2,4}, {3,3}, {5,4}},
+    r2 = {{1,4}, {2,3}, {3,4}};
+    
+    double expected = log10(pow(0.25, 3) / pow(0.32, 3));
+    double distance = sut->llr(r1, r2);
+    EXPECT_DOUBLE_EQ(expected, distance);
+    
+    distance = sut->llr(r2, r1);
+    EXPECT_DOUBLE_EQ(expected, distance);
+  }
+  
+  TEST_F(NeighborsLocatorTest, llr__complex_input) {
+    Ratings_list r1 = {{1,3}, {2,4}, {4,3}, {6,5}},
+    r2 = {{1,4}, {4,5}, {6,1}};
+    
+    double expected = log10(0.25 * 0.125 * 0.0625 / (0.32 * 0.24 * 0.08));
+    double distance = sut->llr(r1, r2);
+    EXPECT_DOUBLE_EQ(expected, distance);
+    
+    distance = sut->llr(r2, r1);
+    EXPECT_DOUBLE_EQ(expected, distance);
+  }
+  
 }

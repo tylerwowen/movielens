@@ -9,11 +9,12 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method) {
+NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method, int maxRating) {
   this->trainUsers = trainUsers;
   this->numOfItems = numOfItems;
   this->k = k;
   this->method = method;
+  this->maxRating = maxRating;
 }
 
 void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRatings) {
@@ -39,6 +40,10 @@ UsersPtr NeighborsLocator::getNeighbors() {
       break;
     case PCC:
       calculateSortableAllDistances(distances, &NeighborsLocator::pcc);
+      sort_nth_elemet(distances, k+1, false);
+      break;
+    case LLR:
+      calculateSortableAllDistances(distances, &NeighborsLocator::llr);
       sort_nth_elemet(distances, k+1, false);
       break;
     default:
@@ -71,6 +76,9 @@ void NeighborsLocator::calculateDistancesToNeighbors(int numUsers) {
     case PCC:
       calculateAllDistances(&NeighborsLocator::pcc);
       break;
+    case LLR:
+      calculateAllDistances(&NeighborsLocator::llr);
+      break;
     default:
       break;
   }
@@ -86,6 +94,7 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
     switch (method) {
       case COS:
       case PCC:
+      case LLR:
         sort_nth_elemet(distances, k + 1, false);
         break;
       case L1:
@@ -359,6 +368,42 @@ double NeighborsLocator::pcc(Ratings_list &r1, Ratings_list &r2) {
   double mean2 = sum2 / numOfItems;
 
   return (sum12 - numOfItems * mean1 * mean2) / (sqrt(sum1SQ - numOfItems * mean1 * mean1) * sqrt(sum2SQ - numOfItems * mean2 * mean2));
+}
+
+double NeighborsLocator::llr(Ratings_list &r1, Ratings_list &r2) {
+  vector<int> deltaCounter(maxRating, 0);
+  
+  Ratings_list::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
+  while (iter1 != r1.cend() && iter2 != r2.cend()) {
+    double rating1 = 0, rating2 = 0;
+    
+    if (iter1->first < iter2->first) {
+      iter1++;
+    }
+    else if (iter1->first == iter2->first) {
+      rating1 = iter1->second;
+      rating2 = iter2->second;
+      deltaCounter[(int)fabs(rating1 - rating2)]++;
+      iter1++;
+      iter2++;
+    }
+    else {
+      iter2++;
+    }
+  }
+  double accumulator = 1;
+  accumulator *= pow(0.5, deltaCounter[0]) / pow((double) 1 / maxRating, deltaCounter[0]);
+  
+  for (int i = 1; i < maxRating - 1; i++) {
+    double pA = pow(2, -i - 1),
+    pRand = 2 * (maxRating - i) / (double)(maxRating * maxRating);
+    accumulator *= pow(pA, deltaCounter[i]) / pow(pRand, deltaCounter[i]);
+  }
+  
+  double pRand = 2 / (double)(maxRating * maxRating);
+  accumulator *= pow(pow(2, -maxRating + 1), deltaCounter[maxRating-1]) / pow(pRand, deltaCounter[maxRating-1]);
+  
+  return log10(accumulator);
 }
 
 void sort_nth_elemet(Distances &distances, int k, bool ascending) {

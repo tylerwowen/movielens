@@ -60,7 +60,7 @@
 /* Begin PBXFileReference section */
 		2F0D07AD1CAA00B000A8A4A0 /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
 		2F218E201CBB44BA00A71421 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
-		2F486FA81CBB41BD0012D98F /* neighborsfinder_ignore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = neighborsfinder_ignore.cpp; path = ../movielens/neighborsfinder_ignore.cpp; sourceTree = "<group>"; };
+		2F486FA81CBB41BD0012D98F /* neighborsfinder_ignore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = neighborsfinder_ignore.cpp; path = movielens/neighborsfinder_ignore.cpp; sourceTree = SOURCE_ROOT; };
 		2F486FAE1CBB41E90012D98F /* ignore_missing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ignore_missing; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDBA6351C7A8425002E3B7E /* movielens */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = movielens; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDBA6381C7A8425002E3B7E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };

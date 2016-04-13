@@ -9,11 +9,12 @@
 #include "neighborsfinder.hpp"
 using namespace std;
 
-NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method) {
+NeighborsLocator::NeighborsLocator(UsersMap *trainUsers, int numOfItems, int k, int method, int maxRating) {
   this->trainUsers = trainUsers;
   this->numOfItems = numOfItems;
   this->k = k;
   this->method = method;
+  this->maxRating = maxRating;
 }
 
 void NeighborsLocator::setTargetUser(int targetUserId, Ratings *targetUserRatings) {
@@ -158,6 +159,9 @@ double NeighborsLocator::euclideanDistance(Ratings_list &r1, Ratings_list &r2) {
       iter2++;
     }
   }
+  if (distance == 0) {
+    return 1E10;
+  }
   
   return sqrt(distance);
 }
@@ -182,6 +186,9 @@ double NeighborsLocator::cityBlockDistance(Ratings_list &r1, Ratings_list &r2) {
     else {
       iter2++;
     }
+  }
+  if (distance == 0) {
+    return 1E10;
   }
   
   return distance;
@@ -211,7 +218,9 @@ double NeighborsLocator::cosineSimilarity(Ratings_list &r1, Ratings_list &r2) {
     }
   }
 
-  // TODO: handle non-0 situations
+  if (dotProduct == 0) {
+    return 0;
+  }
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
 }
 
@@ -241,6 +250,10 @@ double NeighborsLocator::pcc(Ratings_list &r1, Ratings_list &r2) {
       iter2++;
     }
   }
+  
+  if (sum12 == 0) {
+    return -1;
+  }
 
   double mean1 = sum1 / numOfItems;
   double mean2 = sum2 / numOfItems;
@@ -267,6 +280,3 @@ bool reverseCmp(const Distance &a, const Distance &b) {
   return a.second > b.second;
 }
 
-int defaultRatingForItem(int id) {
-  return 0;
-}
