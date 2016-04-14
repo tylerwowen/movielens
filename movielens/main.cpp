@@ -105,7 +105,7 @@ int main(int argc, char ** argv) {
   if (args.prettyPrint) {
     cout << "MAE = " << mae << endl;
     cout << "RMSE = " << rmse << endl;
-    cout << "Recall = " << recall << "%" << endl;
+    cout << "Recall = " << recall * 100 << "%" << endl;
   }
   else {
     cout << mae << " " << rmse << " " <<  recall << " ";

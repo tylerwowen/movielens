@@ -218,7 +218,7 @@ double NeighborsLocator::cosineSimilarity(Ratings_list &r1, Ratings_list &r2) {
     }
   }
 
-  if (dotProduct == 0) {
+  if (dotProduct < 1) {
     return 0;
   }
   return dotProduct/(sqrt(norm1SQ) * sqrt(norm2SQ));
@@ -251,7 +251,7 @@ double NeighborsLocator::pcc(Ratings_list &r1, Ratings_list &r2) {
     }
   }
   
-  if (sum12 == 0) {
+  if (sum12 < 1) {
     return -1;
   }
 

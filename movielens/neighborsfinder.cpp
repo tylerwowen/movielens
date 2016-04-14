@@ -392,7 +392,7 @@ double NeighborsLocator::llr(Ratings_list &r1, Ratings_list &r2) {
     }
   }
   double accumulator = 1;
-  accumulator *= pow(0.5, deltaCounter[0]) / pow((double) 1 / maxRating, deltaCounter[0]);
+  accumulator *= pow(0.5, deltaCounter[0]) / pow(1.0 / (double)maxRating, deltaCounter[0]);
   
   for (int i = 1; i < maxRating - 1; i++) {
     double pA = pow(2, -i - 1),
