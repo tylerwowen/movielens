@@ -9,7 +9,8 @@ prepareData <- function(name) {
   data$method[data$method==1] <- 'L1'
   data$method[data$method==2] <- 'L2'
   data$method[data$method==3] <- 'PCC'
-
+  data$method[data$method==4] <- 'LLR'
+  
   data$matched_only[data$matched_only==0] <- 'All_included'
   data$matched_only[data$matched_only==1] <- 'Matched_only'
   return(data)
@@ -52,10 +53,10 @@ plot_all <- function(dataDir1, dataDir2, size) {
 args = commandArgs(trailingOnly=TRUE)
 root = 'raw_results'
 if (length(args)>0) {
-  pdf( 'Rplots_ignore.pdf', width = 12, height = 8 )
+  pdf( 'Rplots_ignore.pdf', width = 16, height = 8 )
   root = 'raw_results_ignore'
 } else {
-  pdf( 'Rplots.pdf', width = 12, height = 8 )
+  pdf( 'Rplots.pdf', width = 16, height = 8 )
 }
 
 # 100k
