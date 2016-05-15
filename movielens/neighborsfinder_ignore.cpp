@@ -141,6 +141,8 @@ void NeighborsLocator::calculateDistances(Distances &distances) {
 
 double NeighborsLocator::euclideanDistance(Ratings_list &r1, Ratings_list &r2) {
   double distance = 0;
+  bool hasSameRating = false;
+  
   Ratings_list::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
   while (iter1 != r1.cend() && iter2 != r2.cend()) {
     double rating1 = 0, rating2 = 0;
@@ -154,25 +156,27 @@ double NeighborsLocator::euclideanDistance(Ratings_list &r1, Ratings_list &r2) {
       iter1++;
       iter2++;
       distance += pow(rating1 - rating2, 2);
+      hasSameRating = true;
     }
     else {
       iter2++;
     }
   }
-  if (distance == 0) {
+  if (!hasSameRating) {
     return 1E10;
   }
-  
+
   return sqrt(distance);
 }
 
 double NeighborsLocator::cityBlockDistance(Ratings_list &r1, Ratings_list &r2) {
   double distance = 0;
+  bool hasSameRating = false;
   
   Ratings_list::const_iterator iter1 = r1.cbegin(), iter2 = r2.cbegin();
   while (iter1 != r1.cend() && iter2 != r2.cend()) {
     double rating1 = 0, rating2 = 0;
-    
+   
     if (iter1->first < iter2->first) {
       iter1++;
     }
@@ -182,12 +186,13 @@ double NeighborsLocator::cityBlockDistance(Ratings_list &r1, Ratings_list &r2) {
       iter1++;
       iter2++;
       distance += fabs(rating1 - rating2);
+      hasSameRating = true;
     }
     else {
       iter2++;
     }
   }
-  if (distance == 0) {
+  if (!hasSameRating) {
     return 1E10;
   }
   
@@ -217,7 +222,7 @@ double NeighborsLocator::cosineSimilarity(Ratings_list &r1, Ratings_list &r2) {
       iter2++;
     }
   }
-
+  // dotProduct cannot be less than 1 if there are ever two ratings on the same item
   if (dotProduct < 1) {
     return 0;
   }
@@ -250,7 +255,7 @@ double NeighborsLocator::pcc(Ratings_list &r1, Ratings_list &r2) {
       iter2++;
     }
   }
-  
+  // sum12 cannot be less than 1 if there are ever two ratings on the same item
   if (sum12 < 1) {
     return -1;
   }
