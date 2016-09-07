@@ -42,9 +42,10 @@ int main(int argc, char ** argv) {
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
-  UsersMap trainUsers(args.userNum), testUsers;
-  readData(args.trainFile, trainUsers);
-  int testSize = readData(args.testFile, testUsers);
+  int numUsers = args.userNum / 32 * 32;
+  UsersMap trainUsers(numUsers), testUsers(numUsers);
+  readData(args.trainFile, trainUsers, numUsers);
+  int testSize = readData(args.testFile, testUsers, numUsers);
   int validTestSize = testSize;
 
   NeighborsLocator locator(&trainUsers, args.moiveNum, args.k, args.method, args.maxRating);
@@ -69,6 +70,10 @@ int main(int argc, char ** argv) {
         if (prediction == 0) {
           continue;
         }
+//        cout << user.first << ", " << rating.first
+//        << ", " << actual << ", "<< prediction << "\n";
+//        cout << "user: " << user.first << " item: " << rating.first
+//        << " actual = " << actual << " predicted = "<< prediction << "\n";
         predictedCount++;
         sum += fabs(actual - prediction);
         sumSQ += pow(actual - prediction, 2);
@@ -103,6 +108,9 @@ int main(int argc, char ** argv) {
   recall = (double)predictedCount / (double)validTestSize;
   
   if (args.prettyPrint) {
+    cout << "Train users " << trainUsers.size() << endl;
+    cout << "Test users " << testUsers.size() << endl;
+    cout << "Testsize = " << testSize << ", valid test size = " << validTestSize << ", predicted = " << predictedCount << endl;
     cout << "MAE = " << mae << endl;
     cout << "RMSE = " << rmse << endl;
     cout << "Recall = " << recall * 100 << "%" << endl;

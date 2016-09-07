@@ -69,7 +69,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-d 1"
@@ -124,7 +124,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-k5 -d2 -m1682 -u1000 -r ./data/ml-100k/u1.base -t ./data/ml-100k/u1.test "
+            argument = "-k5 -d0 -m1682 -u943 -r ./data/ml-100k/u3.base -t ./data/ml-100k/u3.test "
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

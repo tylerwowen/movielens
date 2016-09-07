@@ -95,7 +95,7 @@ UsersPtr NeighborsLocator::getMatchedKNeighbors(int targetItem) {
       case COS:
       case PCC:
       case LLR:
-        sort_nth_elemet(distances, k + 1, false);
+        sort_nth_elemet(distances, distances.size(), false);
         break;
       case L1:
       case L2:
