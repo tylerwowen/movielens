@@ -27,6 +27,6 @@ public:
   }
 };
 
-int readData(std::string const &filename, UsersMap &users);
+int readData(std::string const &filename, UsersMap &users, int numUsers);
 
 #endif /* datareader_hpp */
