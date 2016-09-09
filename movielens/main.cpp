@@ -93,7 +93,7 @@ int main(int argc, char ** argv) {
         sumSQ += pow(actual - prediction, 2);
       }
       t_after = Clock::now();
-      t_knn += t_after - t_start;
+      t_knn += t_after - t_before;
     }
     auto t_end = Clock::now();
     cout << "Distance computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_dist).count() << " ms\n";
