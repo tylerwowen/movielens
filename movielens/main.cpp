@@ -45,7 +45,7 @@ int main(int argc, char ** argv) {
   
   argp_parse (&argp, argc, argv, 0, 0, &args);
   
-  int numUsers = args.userNum / 32 * 32;
+  int numUsers = args.userNum / 24 * 24;
   UsersMap trainUsers(numUsers), testUsers(numUsers);
   readData(args.trainFile, trainUsers, numUsers);
   int testSize = readData(args.testFile, testUsers, numUsers);
@@ -91,9 +91,17 @@ int main(int argc, char ** argv) {
         predictedCount++;
         sum += fabs(actual - prediction);
         sumSQ += pow(actual - prediction, 2);
+        if (predictedCount % 100000 == 0) {
+          cout << "\nerror sum so far: " << sum << ", error sum squared so far " << sumSQ << endl;
+          double mae = sum / predictedCount,
+          rmse = sqrt(sumSQ / predictedCount);
+          cout << "MAE = " << mae << endl;
+          cout << "RMSE = " << rmse << endl;
+          cout << "Predicted count so far = " << predictedCount << endl;
+        }
       }
       t_after = Clock::now();
-      t_knn += t_after - t_start;
+      t_knn += t_after - t_before;
     }
     auto t_end = Clock::now();
     cout << "Distance computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_dist).count() << " ms\n";
