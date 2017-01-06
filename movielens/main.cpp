@@ -84,29 +84,48 @@ int main(int argc, char ** argv) {
         if (prediction == 0) {
           continue;
         }
-//        cout << user.first << ", " << rating.first
-//        << ", " << actual << ", "<< prediction << "\n";
 //        cout << "user: " << user.first << " item: " << rating.first
-//        << " actual = " << actual << " predicted = "<< prediction << "\n";
+//        << " actual = " << actual << " predicted = "<< prediction << endl;
+//        if (user.first < 10) {
+//          int validRatings = 0;
+//          double ratingSum = 0;
+//          for (int i = 0; i < neighbors.size(); i++) {
+//            Ratings_map::const_iterator ratingItr = neighbors[i]->r_map.find(rating.first);
+//            if (ratingItr != neighbors[i]->r_map.end()) {
+//              validRatings++;
+//              ratingSum += ratingItr->second;
+//            }
+//          }
+//          cout << user.first << ", " << rating.first
+//          << ", " << actual << ", "<< prediction << ", " << ratingSum*2 << ", " << validRatings <<"\n";
+//        }
         predictedCount++;
         sum += fabs(actual - prediction);
         sumSQ += pow(actual - prediction, 2);
-        if (predictedCount % 100000 == 0) {
-          cout << "\nerror sum so far: " << sum << ", error sum squared so far " << sumSQ << endl;
-          double mae = sum / predictedCount,
-          rmse = sqrt(sumSQ / predictedCount);
-          cout << "MAE = " << mae << endl;
-          cout << "RMSE = " << rmse << endl;
-          cout << "Predicted count so far = " << predictedCount << endl;
-        }
+//        if (predictedCount % 100000 == 0) {
+//          cout << "\nerror sum so far: " << sum << ", error sum squared so far " << sumSQ << endl;
+//          double mae = sum / predictedCount,
+//          rmse = sqrt(sumSQ / predictedCount);
+//          cout << "MAE = " << mae << endl;
+//          cout << "RMSE = " << rmse << endl;
+//          cout << "Predicted count so far = " << predictedCount << endl;
+//        }
       }
       t_after = Clock::now();
       t_knn += t_after - t_before;
     }
     auto t_end = Clock::now();
-    cout << "Distance computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_dist).count() << " ms\n";
-    cout << "KNN computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_knn).count() << " ms\n";
-    cout << "Total computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count() << " ms\n";
+    if (args.prettyPrint) {
+      cout << "Distance computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_dist).count() << " ms\n";
+      cout << "KNN computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_knn).count() << " ms\n";
+      cout << "Total computation time: " << chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count() << " ms\n";
+    }
+    else {
+      cout  << chrono::duration_cast<std::chrono::milliseconds>(t_dist).count() << " "
+      << chrono::duration_cast<std::chrono::milliseconds>(t_knn).count() << " "
+      << chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count() << " ";
+    }
+    
   }
   else {
     for (auto& user: testUsers) {
